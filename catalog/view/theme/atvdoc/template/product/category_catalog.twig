@@ -1,0 +1,72 @@
+{{ header }}
+
+<div class="content-wrapper">
+  <div class="center inner">
+    <div class="content">
+      <div class="left-column">
+
+        {{ column_left }}
+
+        {{ column_right }}
+
+
+      </div>
+
+
+        <div class="workarea {{ class }}" id="content">
+
+          <div class="breadcrumb-share">
+            <div id="navigation" class="breadcrumb">
+              <div class="breadcrumb__item" id="breadcrumb_0" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemref="breadcrumb_1">
+                <a class="breadcrumb__link current-link" href="/" title="Главная" itemprop="url">
+                  <i class="fa fa-home breadcrumb__icon_main"></i>
+                  <span class="breadcrumb__title_main" itemprop="title">Главная</span>
+                </a>
+              </div>
+              
+                 <div class="breadcrumb__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child"><span class="breadcrumb__arrow"></span><span class="breadcrumb__title" itemprop="title">Каталог</span></div>
+                            
+              <!--
+              <div class="breadcrumb__item"><span class="breadcrumb__arrow"></span><span
+                  class="breadcrumb__title"></span></div>
+
+              -->
+            </div>
+          </div>
+          <h1 id="pagetitle">Каталог</h1>
+
+            {{ content_top }}
+
+
+        {% if categories %}
+          <div class="banners-main__row"> 
+            {% for category in categories %}
+
+              <a class="banners-main__item" href="{{ category.href }}" style="width:50%;">
+                <span class="banners-main__item-image" style="background-image:url('{{ category.thumb }}');"></span>
+                <span class="banners-main__item-block-wrap">
+                  <span class="banners-main__item-block">
+                    <span class="banners-main__item-btn">
+          
+                      <span class="banners-main__item-text">{{ category.name }}</span>
+                      <button name="banners-main__item-button" class="btn_buy">Перейти в каталог</button>
+                    </span>
+          
+                  </span>
+                </span>
+              </a>
+
+            {% endfor %}
+          </div>
+        {% endif %}
+      
+
+        {{ content_bottom }}
+      </div>
+    </div>
+  </div>    
+</div>  
+
+
+
+{{ footer }}

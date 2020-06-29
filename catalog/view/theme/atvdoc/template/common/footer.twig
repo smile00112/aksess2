@@ -1,0 +1,109 @@
+{#
+<footer>
+  <div class="container">
+    <div class="row">
+      {% if informations %}
+      <div class="col-sm-3">
+        <h5>{{ text_information }}</h5>
+        <ul class="list-unstyled">
+         {% for information in informations %}
+          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="col-sm-3">
+        <h5>{{ text_service }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+          <li><a href="{{ return }}">{{ text_return }}</a></li>
+          <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_extra }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+          <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+          <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+          <li><a href="{{ special }}">{{ text_special }}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-3">
+        <h5>{{ text_account }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ account }}">{{ text_account }}</a></li>
+          <li><a href="{{ order }}">{{ text_order }}</a></li>
+          <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+          <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p>{{ powered }}</p>
+  </div>
+</footer>
+
+#}
+
+</div>
+</section>
+<section class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+					<div class="footer__conteiner">
+						<div class="footer__block-1">
+							<p><a href=""><img src="img/logo-footer.png" alt=""></a></p>
+							<p class="footer__info-p"><i class="sl15"></i><span>+7 495 234 32 12</span></p>
+							<p class="footer__info-p"><i class="sl16"></i><span>1@aksess.ru</span></p>
+							<p class="footer__info-p"><i class="sl17"></i><span>Пн-вс: 10-00 до 19-00</span></p>
+						</div>
+						<div class="footer__block-2">
+							<h3>Каталог</h3>
+							<ul>
+								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
+									</ul>
+						</div>
+						<div class="footer__block-2">
+							<h3>Покупателю</h3>
+							<ul>
+								<li><a href="#" class="hvr-underline-from-left">О нас</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Доставка</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Оплата</a></li>
+								<li><a href="#" class="hvr-underline-from-left">Контакты</a></li>
+
+							</ul>
+						</div>
+						<div class="footer__block-4 footer__block-2">
+							<h3>Мы в соцсетях</h3><div class="menu__socseti">
+							<a href=""><i class="sl2"></i></a>
+							<a href=""><i class="sl2"></i></a>
+							<a href=""><i class="sl2"></i></a>
+							<a href=""><i class="sl2"></i></a>
+						</div>
+						</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+<script src="/js/scripts.min.js"></script>
+<script src="/catalog/view/javascript/main.js?t=1234" type="text/javascript"></script> 
+
+{% for script in scripts %}
+	<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+</body>
+
+</html>

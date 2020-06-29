@@ -1,0 +1,62 @@
+<div class="vendors_bottom">
+  <div class="h3">Производители</div>
+  <a class="all" href="/manufacturiers/">Все производители</a>
+  <div class="clr"></div>
+  <div class="vendors-section-list">
+    <div class="vendors-section-items">
+        {% for banner in banners %}
+
+          <div class="vendors-section-item">
+
+            {% if banner.link %}
+
+              <a href="{{ banner.link }}">
+                <span class="item">
+                  <span class="image">
+                    <img src="{{ banner.image }}" alt="{{ banner.title }}" width="69" height="24" >
+                  </span>
+                  <span class="item-title">{{ banner.title }}</span>
+                </span>
+              </a>
+            {% else %}
+            
+            <a href="javascript:void(0);">
+              <span class="item">
+                <span class="image">
+                  <img src="{{ banner.image }}" alt="{{ banner.title }}" width="69" height="24" >
+                </span>
+                <span class="item-title">{{ banner.title }}</span>
+              </span>
+            </a>
+            
+            {% endif %}
+
+
+          </div>
+
+        {% endfor %}
+      
+
+
+      <div class="clr"></div>
+    </div>
+  </div>
+</div>
+
+{#
+<div class="swiper-viewport">
+  <div id="banner{{ module }}" class="swiper-container">
+    <div class="swiper-wrapper">{% for banner in banners %}
+      <div class="swiper-slide">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
+      {% endfor %}</div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#banner{{ module }}').swiper({
+	effect: 'fade',
+	autoplay: 2500,
+    autoplayDisableOnInteraction: false
+});
+--></script> 
+
+#}
