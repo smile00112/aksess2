@@ -186,10 +186,58 @@ class ControllerProductCategory extends Controller {
 				'start'              => ($page - 1) * $limit,
 				'limit'              => $limit
 			);
+			if(!empty($this->request->get['price_from'])) $filter_data['filter_price_from'] = $this->request->get['price_from'];
+			if(!empty($this->request->get['price_to'])) $filter_data['filter_price_to'] = $this->request->get['price_to'];
+			 
+			if(!empty($this->request->get['color'])) $filter_data['filter_color'] = explode("-", $this->request->get['color']);
+			if(!empty($this->request->get['country'])) $filter_data['filter_country'] = explode("-", $this->request->get['country']);
+			if(!empty($this->request->get['model'])) $filter_data['filter_model'] = explode("-", $this->request->get['model']);
+			if(!empty($this->request->get['matherial'])) $filter_data['filter_matherial'] = explode("-", $this->request->get['matherial']);
+			if(!empty($this->request->get['manufacturer'])) $filter_data['filter_manufacturer'] = explode("-", $this->request->get['manufacturer']);			
 
-			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+			//if(!empty($this->request->get['category'])) $filter_data['filter_categoryes_id'] = $this->request->get['category'];
+			// if(!empty($this->request->get['effects'])) $filter_data['filter_effects'] = $this->request->get['effects'];
+			// if(!empty($this->request->get['power'])) $filter_data['filter_power'] = $this->request->get['power'];
+			// if(!empty($this->request->get['zarjd_from'])) $filter_data['filter_zarjd_from'] = $this->request->get['zarjd_from'];
+			// if(!empty($this->request->get['zarjd_to'])) $filter_data['filter_zarjd_to'] = $this->request->get['zarjd_to'];
+			// if(!empty($this->request->get['kalibr_from'])) $filter_data['filter_kalibr_from'] = $this->request->get['kalibr_from'];
+			// if(!empty($this->request->get['kalibr_to'])) $filter_data['filter_kalibr_to'] = $this->request->get['kalibr_to'];
+			// if(!empty($this->request->get['work_time_from'])) $filter_data['filter_work_time_from'] = $this->request->get['work_time_from'];
+			// if(!empty($this->request->get['work_time_to'])) $filter_data['filter_work_time_to'] = $this->request->get['work_time_to'];
+
+			// if(!empty($this->request->get['novinki'])) $filter_data['filter_novinki'] = $this->request->get['novinki'];
+			// if(!empty($this->request->get['special'])) $filter_data['filter_special'] = $this->request->get['special'];
+
+		 	$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+
 			$data['product_total'] = $product_total;
+
+			$filter_data_wl = array(
+				'filter_category_id' => $category_id,
+			);
+			$filters_attr = [];
+
+			//Варианты для фильтра
+			$filters_attr['price']['min'] = 50;
+			$filters_attr['price']['max'] = 50000;
+			$filters_attr['attributes'] = $this->model_catalog_category->getAllFilters_atr($filter_data_wl);
+
+
+			//Карта товаров с характеристиками
+			$data['category_products_map2'] = $this->model_catalog_product->get_AllCategoryProducts(['category_id'=>$category_id ]);
+		 	$data['category_products_map'] = json_encode($data['category_products_map2']);
+
+			$data['filter_color'] = $filters_attr['attributes'][50]['results'];
+			$data['filter_manufacturer'] = $filters_attr['attributes'][44]['results'];
+			$data['filter_matherial'] = $filters_attr['attributes'][55]['results'];
+			$data['filter_model'] = $filters_attr['attributes'][56]['results'];
 			
+			//Дорабатывает цвета
+			foreach($data['filter_color'] as &$c){
+				$c['translit'] =  $this->getTranslit($c['text']);
+			}
+			//print_r($data['filter_color']);
+
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
@@ -253,6 +301,7 @@ class ControllerProductCategory extends Controller {
 					//'image'       => 'image/' . $result['image'],
 					'image' => $i,
 					'mpn'        => $result['mpn'],
+					'sku'        => $result['sku'],
 					'upc'        => $result['upc'],
 					'quantity' =>  $result['quantity'],
 					'name'        => $result['name'],
@@ -523,5 +572,47 @@ class ControllerProductCategory extends Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+	}
+
+	public function getTranslit($text, $translit = 'ru_en') {
+	
+		$RU['ru'] = array( 
+			'Ё', 'Ж', 'Ц', 'Ч', 'Щ', 'Ш', 'Ы',  
+			'Э', 'Ю', 'Я', 'ё', 'ж', 'ц', 'ч',  
+			'ш', 'щ', 'ы', 'э', 'ю', 'я', 'А',  
+			'Б', 'В', 'Г', 'Д', 'Е', 'З', 'И',  
+			'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',  
+			'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ъ',  
+			'Ь', 'а', 'б', 'в', 'г', 'д', 'е',  
+			'з', 'и', 'й', 'к', 'л', 'м', 'н',  
+			'о', 'п', 'р', 'с', 'т', 'у', 'ф',  
+			'х', 'ъ', 'ь', '/'
+			); 
+
+		$EN['en'] = array( 
+			"Yo", "Zh",  "Cz", "Ch", "Shh","Sh", "Y'",  
+			"E'", "Yu",  "Ya", "yo", "zh", "cz", "ch",  
+			"sh", "shh", "y'", "e'", "yu", "ya", "A",  
+			"B" , "V" ,  "G",  "D",  "E",  "Z",  "I",  
+			"J",  "K",   "L",  "M",  "N",  "O",  "P",  
+			"R",  "S",   "T",  "U",  "F",  "Kh",  "''", 
+			"'",  "a",   "b",  "v",  "g",  "d",  "e",  
+			"z",  "i",   "j",  "k",  "l",  "m",  "n",   
+			"o",  "p",   "r",  "s",  "t",  "u",  "f",   
+			"h",  "''",  "'",  "-"
+			); 
+		if($translit == 'en_ru') { 
+			$t = str_replace($EN['en'], $RU['ru'], $text);         
+			$t = preg_replace('/(?<=[а-яё])Ь/u', 'ь', $t); 
+			$t = preg_replace('/(?<=[а-яё])Ъ/u', 'ъ', $t); 
+			} 
+		else {
+			$t = str_replace($RU['ru'], $EN['en'], $text);
+			$t = preg_replace("/[\s]+/u", "_", $t); 
+			$t = preg_replace("/[^a-z0-9_\-]/iu", "", $t); 
+			$t = strtolower($t);
+			}
+		return $t; 
+	
 	}
 }

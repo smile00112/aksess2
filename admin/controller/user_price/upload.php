@@ -238,7 +238,7 @@ class ControllerUserPriceUpload extends Controller {
 			{
 					//!!! ВРЕМЕННО делаем рафндомные фотки товаров !!!
 					$rand = rand ( 1 , 5 );
-					if($rand == 5 ) $image = 'catalog/noimage.png';
+					if($rand == 5 ) $image = 'catalog/1.png';
 						else $image = "catalog/{$rand}.png";
 			}	
 			$active = $quantity ? 'Y' : 'N';
@@ -267,9 +267,27 @@ class ControllerUserPriceUpload extends Controller {
 //print_r($p);
 			if(!$p['name']) continue;
 
-				if(!empty($all_site_categoryes[$p['category']])) 
-					$cat = [$all_site_categoryes[$p['category']]['category_id']];
-				else $cat = [0];
+			//составляем цепочку категорий
+				if(!empty($all_site_categoryes[$p['category']])){
+					$cat=[];
+					$_cat = $all_site_categoryes[$p['category']]; 
+//print_R($_cat);
+					while($_cat){
+
+//echo $_cat['category_id'].'<br>';
+
+						$cat[]= $_cat['category_id'];
+						$search = array_search($_cat['parent_id'], array_column($all_site_categoryes_t, 'category_id'));
+						$_cat = ($search!==false) ? $all_site_categoryes_t[$search] : false ; 
+						
+					}
+				}else 
+					$cat = [0];
+// echo '<pre>';
+// print_r($cat);
+// echo '</pre>';		
+// print_r($_cat);
+// exit;
 				$search_manufacturer = array_search($p['manufacturer'], array_column($all_site_manufacturers, '1c_id'));
 				$manufacturer_site_id = ($search_manufacturer!==false ) ? $all_site_manufacturers[$search_manufacturer]['manufacturer_id'] : 0;
 
@@ -406,12 +424,21 @@ class ControllerUserPriceUpload extends Controller {
 
 					}
 
-					if($ii > 2220)
-						{print_r($p);exit;}
+					if($ii > 12222)
+						{		
+							
+							echo '<pre>';
+							print_r($p);
+							echo '</pre>';
+							exit;
+						}
 					
 		// print_r($p);
 		// exit;
-		if($ii > 100500) exit;
+		if($ii > 100500){
+
+ exit;
+		}
 		}
 
 

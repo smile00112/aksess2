@@ -82,9 +82,90 @@
     padding-left: 0%;
 
 }
-
 .sort__price.selected{
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
 	background-color: #ff5307;
 }
+.pagination {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 40px auto;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center
+}
+
+.pagination li {
+    list-style: none;
+    margin-right: 15px
+}
+
+.pagination a {
+    width: 44px;
+    height: 44px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #333;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 1px solid #ff5307
+}
+.pagination_last, .pagination_first{
+	border: 1px solid #ffffff!important;
+}
+.pagination a:hover {
+    background: #ff5307;
+    color: #fff
+}
+
+.pagination i {
+    cursor: pointer
+}
+.checkbox.zhyoltyj span {  background: #fd0; }
+.checkbox.belyj span {  background: #ffffff; border: 1px solid;}
+.checkbox.zelyonyj span {  background: #2e7d32; }
+.checkbox.krasnij span {  background: red; }
+.checkbox.krasnyj span {  background: red; }
+.checkbox.zolotoj span {  background: rgb(241, 213, 136); }
+.checkbox.metall_seryj span {  background: rgb(85, 78, 78); }
+.checkbox.rozovoe_zoloto span {  background: rgb(200, 107, 212); }
+.checkbox.serebryanyj span {  background: rgb(0, 0, 0); }
+.checkbox.seryj span {  background: rgb(80, 80, 80); }
+.checkbox.chyornyj span {  background: black; }
+.checkbox.chyornyj_s_serymi_vstavkami span {  background: rgb(54, 31, 31); }
+.checkbox.chyornyj_s_krasnymi_vstavkami span {  background: rgb(54, 31, 31); }
+.checkbox.belyj_oranzhevyj span {  background: rgb(255, 213, 136); }
+.checkbox.biryuzovyj span {  background: rgb(128, 253, 222); }
+.checkbox.vinnyj span {  background: rgb(129, 63, 72); }
+.checkbox.goluboj span {  background: rgb(96, 182, 231); }
+.checkbox.zhemchuzhnyj_nikel span {  background: rgb(30, 52, 65); }
+.checkbox.korichnevyj span {  background: rgb(80, 60, 49); }
+.checkbox.oranzhevyj span {  background: rgb(243, 86, 2); }
+.checkbox.prozrachnyj span {  background: rgb(202, 202, 202); }
+.checkbox.rozovyj span {  background: rgb(250, 135, 244); }
+.checkbox.sinij span {  background: rgb(17, 32, 250); }
+.checkbox.tyomno-zelyonyj span {  background: rgb(8, 73, 33); }
+.checkbox.tyomno-seryj span {  background: rgb(59, 59, 59); }
+.checkbox.tyomno-sinij span {  background: rgb(16, 5, 65); }

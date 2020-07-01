@@ -7,7 +7,7 @@ $(function ($) {
 		$(this).text($t);
 	})
 	
-	$('.image-link').magnificPopup({type:'image',closeOnContentClick:true});
+	//$('.image-link').magnificPopup({type:'image',closeOnContentClick:true});
 
 	$('.popup-youtube').click(function(e) {
 		e.preventDefault();

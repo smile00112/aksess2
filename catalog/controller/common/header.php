@@ -68,9 +68,7 @@ class ControllerCommonHeader extends Controller {
 		$this->load->model('catalog/category');
 		$data['categories'] = array();
 		$categories = $this->model_catalog_category->getAllCategories(0, 34718);
-// echo '<pre>';
-// 	print_r($categories);
-// echo '</pre>';
+
 		foreach ($categories as $category) {
 			$children_data = array();
 
@@ -83,7 +81,8 @@ class ControllerCommonHeader extends Controller {
 			if(!empty($category['top']) || $category['category_id'] == 31718)
 				$data['categories'][] = array(
 					'category_id' => $category['category_id'],
-					'name'	=> $category['name'],
+					//'name'	=> $category['name'],
+					'name'	=> $category['meta_h1'],
 					'icon'	=> html_entity_decode($category['icon']),
 					'product_count' => $this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '',
 					'children'    => $category['children'],
