@@ -117,47 +117,30 @@
 				{% for category in categories %}
 				<li {% if current_page_link == category.href %}class="li__orange"{% endif %}>
 					<a href="{{ category.href }}" >
-						{% if current_page_link == category.href %}<i class="sl29"></i>{% else %}{{category.icon}}{% endif %}
+						{% if current_page_link == category.href %}<i class="sl29"></i>{% else %}{#{category.icon}#}{% endif %}
 						
 						<span>{{ category.name }}</span>
 					</a> 
+
+					{% if category.children %}
+					<ul class="submenu" >
+						{% for child in category.children %}
+						<li class="catalog-section-child">
+							{% if child.category_id == child_id %}
+								<a href="{{ child.href }}" title="{{ child.name }}">{{ child.name }}</a>
+							{% else %}
+								<a href="{{ child.href }}" title="{{ child.name }}">{{ child.name }}</a>
+							{% endif %}
+							</li>
+					{% endfor %}
+						</ul>
+					{% endif %}
+
 				</li>
 
-{#
-						{% if category.children %}
-						<div class="catalog-section-childs" style="display:none;">
-							{% for child in category.children %}
-							<div class="catalog-section-child">
-								{% if child.category_id == child_id %}
-									<a href="{{ child.href }}" title="{{ child.name }}">
-										<span class="child">
-											<span class="graph">
-												<i class="ef ef-engraver" aria-hidden="true"></i>
-											</span>
-											<span class="text-cont">
-												<span class="text">{{ child.name }}</span>
-											</span>
-										</span>
-										
-									</a>
-								{% else %}
-									<a href="{{ child.href }}" title="{{ child.name }}">
-										<span class="child">
-											<span class="graph">
-												<i class="ef ef-engraver" aria-hidden="true"></i>
-											</span>
-											<span class="text-cont">
-												<span class="text">{{ child.name }}</span>
-											</span>
-										</span>
-										
-									</a>
-								{% endif %}
-							</div>
-						{% endfor %}
-						</div>
-						{% endif %}
-#}
+
+
+{##}
 
 				{% endfor %}
 

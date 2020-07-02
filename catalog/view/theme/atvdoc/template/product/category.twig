@@ -79,7 +79,7 @@
 								<section class="">
 									<h3 class="title_block"><span class="orange__kvsdro"></span>	<span>Цена</span></h3>
 									<div class="">
-										<p><input type="text" id="example_id" name="price" data-filter_val value="" class="filtr__price"/></p>
+										<p><input type="text" id="example_id" name="price" data-from="{{price_from}}" data-to="{{price_to}}"  data-filter_val value="" class="filtr__price"/></p>
 									</div>
 								</section>
 								<section class="accordion_item active_block color__important accordion__color">
@@ -87,14 +87,17 @@
 									<div class="info" style="display: block;">
 
                     {% for attr in filter_color %}
-                      <label class="checkbox {{attr.translit}}">
+                    
+                      <label class="checkbox {{attr.translit}} f-item" {% if loop.index >= 10 %} style="display:none" {% endif %}>
                         <input type="checkbox" data-filter_val name="color" {% if attr.checked %}checked="checked"{% endif %} value="{{attr.text}}">
                         <span tabindex="0"></span>
                         <sup data-attr_ostatok="color_{{attr.text}}" class="ostatok">(777)</sup>
                       </label>
+
+                      {% if loop.index == 10 %}<span class="filtr__add-color more_filter_items">+ еще <i>{{ loop.revindex }}</i></span>{% endif %}
                     {% endfor %}
                     
-                    <!--<span class="filtr__add-color">+ еще <i>15</i></span>-->
+                    <!--<span class="filtr__add-color more_filter_items">+ еще <i>15</i></span>-->
 
 									</div>
 								</section>
@@ -105,12 +108,13 @@
 
                       {% for attr in filter_manufacturer %}
 
-                        <p class="fabricator__block--item"><label class="checkbox fabricator">
+                        <p class="fabricator__block--item f-item" {% if loop.index >= 10 %} style="display:none" {% endif %}><label class="checkbox fabricator">
                             <input type="checkbox" data-filter_val name="manufacturer" {% if attr.checked %}checked="checked"{% endif %} value="{{attr.text}}">
                             <span class="fabricator__close checkbox__text">{{attr.text}}<sup data-attr_ostatok="manufacturer_{{attr.text}}" class="ostatok">(777)</sup></span>
                           </label>
                         </p>
-                       
+                        {% if loop.index == 10 %}<span class="filtr__add-color more_filter_items">+ еще <i>{{ loop.revindex }}</i></span>{% endif %}
+
                       {% endfor %}
                       
 
@@ -125,12 +129,13 @@
 
                       {% for attr in filter_matherial %}
 
-                        <p class="fabricator__block--item"><label class="checkbox fabricator">
+                        <p class="fabricator__block--item f-item" {% if loop.index >= 10 %} style="display:none" {% endif %}><label class="checkbox fabricator">
                             <input type="checkbox" data-filter_val name="matherial" {% if attr.checked %}checked="checked"{% endif %} value="{{attr.text}}">
                             <span class="fabricator__close checkbox__text">{{attr.text}}<sup data-attr_ostatok="matherial_{{attr.text}}" class="ostatok">(777)</sup></span>
                           </label>
                         </p>
-                       
+                        {% if loop.index == 10 %}<span class="filtr__add-color more_filter_items">+ еще <i>{{ loop.revindex }}</i></span>{% endif %}
+
                       {% endfor %}
                       
 
@@ -145,12 +150,14 @@
 
                       {% for attr in filter_model %}
 
-                        <p class="fabricator__block--item"><label class="checkbox fabricator">
+                        <p class="fabricator__block--item f-item" {% if loop.index >= 10 %} style="display:none" {% endif %}><label class="checkbox fabricator">
                             <input type="checkbox" data-filter_val name="model" {% if attr.checked %}checked="checked"{% endif %} value="{{attr.text}}">
                             <span class="fabricator__close checkbox__text">{{attr.text}}<sup data-attr_ostatok="model_{{attr.text}}" class="ostatok">(777)</sup></span>
                           </label>
                         </p>
-                       
+
+                        {% if loop.index == 10 %}<span class="filtr__add-color more_filter_items">+ еще <i>{{ loop.revindex }}</i></span>{% endif %}
+
                       {% endfor %}
                       
 
@@ -159,7 +166,7 @@
                 </section>
                 
 								<div class="filtr__button ">
-									<button class="hvr-fade">Применить</button>
+									<button class="hvr-fade filter-aply">Применить</button>
 									<button class="hvr-fade close__mobile-button">Закрыть Фильтр</button>
 								</div>
               </div>
@@ -263,26 +270,40 @@ function _map(element) {
   console.log( element.value );
 }
 
+
+
 class Filter {
+  //var self = this;
   handleEvent(event) {
-    console.log(event.target.value)
-    
+
     //Типы фильтров
-    let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
+    
 
     //Имя текущего выбранного фильтра
     let el_name = event.target.checked ? event.target.name : '';
-
-    switch(event.type) {
+    let target = event.target;
+    filtered(el_name)
+  /*  switch(event.type) {
       case 'change':
       //console.log( fitlterItem.value )
       //  elem.innerHTML = "Нажата кнопка мыши";
         break;
       case 'click':
-      let target = event.target;
+      
 
+      
+    };*/
+  
+  };
 
+  }
 
+  function filtered(el_name){
+    //console.log(event.target.value)
+    let price_from = document.querySelector('.irs-from').innerHTML;
+    let price_to = document.querySelector('.irs-to').innerHTML;
+
+    let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
     //Массив выбранных цветов 
     let selected_colors = Array.prototype.map.call(document.querySelectorAll('[name="color"]:checked'), function (item) {
         return item.value;
@@ -304,12 +325,12 @@ class Filter {
       let map_filtered = map.filter(function(item, index, array) {
           //console.warn(item, index, array)
          // console.log(selected_colors.length,  selected_manufacturiers.length)
-
-         let color = ( !selected_colors.length ) || ( selected_colors.indexOf(item.color) >=0 || item.color == null ) ;
-         let model = ( !selected_models.length ) || ( selected_models.indexOf(item.model) >=0 || item.model == null ) ;
-         let matherial = ( !selected_matherials.length  ) || ( selected_matherials.indexOf(item.matherial) >=0 || item.matherial == null ) ;
-         let manufacturer = ( !selected_manufacturiers.length ) ||( selected_manufacturiers.indexOf(item.manufacturer) >=0 || item.manufacturer == null ) ;
-         let price = true;
+          let price = item.price <= price_to && item.price >= price_from;
+          let color = ( !selected_colors.length ) || ( selected_colors.indexOf(item.color) >=0 || item.color == null ) ;
+          let model = ( !selected_models.length ) || ( selected_models.indexOf(item.model) >=0 || item.model == null ) ;
+          let matherial = ( !selected_matherials.length  ) || ( selected_matherials.indexOf(item.matherial) >=0 || item.matherial == null ) ;
+          let manufacturer = ( !selected_manufacturiers.length ) ||( selected_manufacturiers.indexOf(item.manufacturer) >=0 || item.manufacturer == null ) ;
+         //let price = true;
 
         //console.log(item);
         //console.log(item.color, color, model, matherial, manufacturer, price);
@@ -374,59 +395,84 @@ class Filter {
        });
    });
       // console.warn( fitlterItem.value )
-      break;
+      
     }
-  }
-}
 
 document.querySelectorAll('[data-filter_val]').onclick = function() { // перезапишет существующий обработчик
     console.log( this.value );
-    alert()
 };
 
 let filter = new Filter();
 
-let filter_elements = document.querySelectorAll('[data-filter_val]');
-filter_elements.forEach((fitlterItem) => fitlterItem.addEventListener('click' , filter ))
 
-document.querySelector('.accordion__color input[type="checkbox"]').click();
-document.querySelector('.accordion__color input[type="checkbox"]').click();
+setTimeout(function tick() {
+
+  //Назначаем события для checkbox фильтра
+  let filter_elements = document.querySelectorAll('[data-filter_val]');
+  filter_elements.forEach((fitlterItem) => fitlterItem.addEventListener('click' , filter ))
+//console.log(filter_elements);
+
+  //Назначаем события для поля цена фильтра  
+  let filter_price = document.querySelector('[name="price"]');
+  //filter_price.addEventListener('change' , alert() );
+
+  //Назначаем события для кнопки "показать еще" фильтра  
+  let filter_more = document.querySelectorAll('.more_filter_items');
+  filter_more.forEach((fitlterItem) => fitlterItem.addEventListener('click' , function(){
+      let p = this.parentNode.children  ;
+      [].forEach.call(p, function(elem) {
+        elem.style.display = '';
+        //elem.remove();
+      });
+
+      this.remove();
+  } ));
+
+
+ // document.querySelector('.accordion__color input[type="checkbox"]').click();
+ // document.querySelector('.accordion__color input[type="checkbox"]').click();
+
+ filtered('price');
+
+}, 2000);
+
+function mmmm() {
+  filter
+}
 
 let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
 
 $('.filter-aply').click(function(e){
     e.preventDefault();
-    dataLayer.push({'event':'ClickFilter'});
 
     var patch = '',
-    $url='<?=$u;?>';
+    $url='{{u}}';
 
     $('.filtr input:checked').each(function(){
-        if($(this).prop('name')!='category[]')
+        if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price')
           patch+='&'+$(this).prop('name')+'='+$(this).val();
         
     });
     //обработка слайдеров 
     var 
-    price = $('.irs'),
-    price_from = price.find('.irs-from'),
-    price_to = price.find('.irs-to');
+    p = $('[name="price"]').val()
+    price = p.split(';'),
+    price_from = price[0],
+    price_to = price[1];
     
-
    //if( price.data('start') != price_from.val() )
     { 
-          patch+='&price_from='+price_from.text();
+          patch+='&price_from='+price_from;
     }
     //if( price.data('end') != price_to.val() )
     {
-          patch+='&price_to='+price_to.text();
+          patch+='&price_to='+price_to;
     }       
-   
 
 
     //patch=window.location.href+patch;
     patch=$url+patch;
-    console.log(patch);
+    //console.log(patch); 
     window.location.href=patch;
 });
 /*

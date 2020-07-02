@@ -81,6 +81,28 @@ class ModelCatalogProduct extends Model {
 			$sql .= " FROM " . DB_PREFIX . "product p";
 		}
 
+
+		//Мой фильтр JOIN
+
+		if (!empty($data['filter_color'])) {
+			$sql .= " JOIN " . DB_PREFIX . "product_attribute pa_color ON (p.product_id = pa_color.product_id AND pa_color.attribute_id = '50') ";
+		}
+		if (!empty($data['filter_country'])) {
+			$sql .= " JOIN " . DB_PREFIX . "product_attribute pa_country ON (p.product_id = pa_country.product_id AND pa_country.attribute_id = '16') ";
+		}
+		if (!empty($data['filter_model'])) {
+			$sql .= " JOIN " . DB_PREFIX . "product_attribute pa_model ON (p.product_id = pa_model.product_id AND pa_model.attribute_id = '56') ";
+		}
+		if (!empty($data['filter_matherial'])) {
+			$sql .= " JOIN " . DB_PREFIX . "product_attribute pa_matherial ON (p.product_id = pa_matherial.product_id AND pa_matherial.attribute_id = '55') ";
+		}		
+		if (!empty($data['filter_manufacturer'])) {
+			$sql .= " JOIN " . DB_PREFIX . "product_attribute pa_manufacturer ON (p.product_id = pa_manufacturer.product_id AND pa_manufacturer.attribute_id = '44') ";
+		}			
+		
+		//----Мой фильтр JOIN
+
+		
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -155,6 +177,81 @@ class ModelCatalogProduct extends Model {
 			$sql .= ")";
 		}
 
+		//Мой фильтр where
+
+		//Цены 	СЛАЙДЕР
+		if ( !empty($data['filter_price_from']) ||  !empty($data['filter_price_to']) ) {
+			$sql_t = '';
+			if(!empty($data['filter_price_from']) &&  !empty($data['filter_price_to']))
+				$sql_t .= " p.price BETWEEN ".(int)$data['filter_price_from']." AND ".(int)$data['filter_price_to']." ";
+			elseif(!empty($data['filter_price_from']) &&  empty($data['filter_price_to']))
+				$sql_t .= " p.price >= ".(int)$data['filter_price_from']."";
+			elseif(empty($data['filter_price_from']) &&  !empty($data['filter_price_to']))
+				$sql_t .= " p.price <= ".(int)$data['filter_price_to']."";
+				
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+
+		//Цвет
+		if (!empty($data['filter_color'])) {
+			$sql_t = '';
+			foreach ($data['filter_color'] as $attr) {
+				if(empty($sql_t))
+					$sql_t .= " pa_color.text = '" . $attr . "'";
+				else
+					$sql_t .= " OR pa_color.text = '" . $attr . "'";
+			}
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+		//Страна
+		if (!empty($data['filter_country'])) {
+			$sql_t = '';
+			foreach ($data['filter_country'] as $attr) {
+				if(empty($sql_t))
+					$sql_t .= " pa_country.text = '" . $attr . "'";
+				else
+					$sql_t .= " OR pa_country.text = '" . $attr . "'";
+			}
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+		//Модель
+		if (!empty($data['filter_model'])) {
+			$sql_t = '';
+			foreach ($data['filter_model'] as $attr) {
+				if(empty($sql_t))
+					$sql_t .= " pa_model.text = '" . $attr . "'";
+				else
+					$sql_t .= " OR pa_model.text = '" . $attr . "'";
+			}
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+		//Материал
+		if (!empty($data['filter_matherial'])) {
+			$sql_t = '';
+			foreach ($data['filter_matherial'] as $attr) {
+				if(empty($sql_t))
+					$sql_t .= " pa_matherial.text = '" . $attr . "'";
+				else
+					$sql_t .= " OR pa_matherial.text = '" . $attr . "'";
+			}
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+		//Производитель
+		if (!empty($data['filter_manufacturer'])) {
+			$sql_t = '';
+			foreach ($data['filter_manufacturer'] as $attr) {
+				if(empty($sql_t))
+					$sql_t .= " pa_manufacturer.text = '" . $attr . "'";
+				else
+					$sql_t .= " OR pa_manufacturer.text = '" . $attr . "'";
+			}
+			$sql .= ' AND ( '.$sql_t.' ) ';
+		}
+
+		//---Мой фильтр where
+
+
+
 		if (!empty($data['filter_manufacturer_id'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
@@ -188,6 +285,10 @@ class ModelCatalogProduct extends Model {
 		} else {
 			$sql .= " ASC, LCASE(pd.name) ASC";
 		}
+
+
+
+
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -420,8 +521,10 @@ class ModelCatalogProduct extends Model {
 	}
 	public function get_AllCategoryProducts($data = array()) {
 
+		//!!!Добавить кещирование!!!!
 		$sql = " SELECT 
 		p.product_id, 
+		pr.price,
 		pa_color.text as color, 
 		pa_country.text as country, 
 		pa_model.text as model, 
@@ -442,9 +545,9 @@ class ModelCatalogProduct extends Model {
 
 			$sql .= " LEFT JOIN " . DB_PREFIX . "product_attribute pa_manufacturer ON (p.product_id = pa_manufacturer.product_id AND pa_manufacturer.attribute_id = '44') ";
 
-
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product pr  ON (p.product_id = pr.product_id) ";
 		
-		$sql .=" WHERE p.category_id = '".(integer)$data['category_id']."'
+		$sql .=" WHERE p.category_id = '".(integer)$data['category_id']." AND pr.status = 1'
 
 		";
 

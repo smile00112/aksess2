@@ -77,6 +77,12 @@ class ControllerCommonHeader extends Controller {
 				'filter_sub_category' => true
 			);
 
+			$childs = [];
+			foreach ($category['children'] as $ch) {
+				$ch['href'] = $this->url->link('product/category', 'path=' . $ch['category_id']);
+				$childs[]=$ch;
+			}
+
 			if(empty($category['children'])) $category['children'] = [];
 			if(!empty($category['top']) || $category['category_id'] == 31718)
 				$data['categories'][] = array(
@@ -85,11 +91,13 @@ class ControllerCommonHeader extends Controller {
 					'name'	=> $category['meta_h1'],
 					'icon'	=> html_entity_decode($category['icon']),
 					'product_count' => $this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '',
-					'children'    => $category['children'],
+					'children'    => $childs,
 					'href'        => $this->url->link('product/category', 'path=' . $category['category_id']),
 					'current' => $this->url->link('product/category', 'path=' . $category['category_id']) == $current_page ? 1 : 0,
 				);
 		}
+
+		//print_r($data['categories']);
 		//--Подключаем меню каталога для мобильной версии
 /*
 		// Wishlist

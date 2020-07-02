@@ -188,7 +188,9 @@ class ControllerProductCategory extends Controller {
 			);
 			if(!empty($this->request->get['price_from'])) $filter_data['filter_price_from'] = $this->request->get['price_from'];
 			if(!empty($this->request->get['price_to'])) $filter_data['filter_price_to'] = $this->request->get['price_to'];
-			 
+			$data['price_from'] = !empty($this->request->get['price_from']) ? $this->request->get['price_from'] : 0;
+			$data['price_to'] = !empty($this->request->get['price_to']) ? $this->request->get['price_to'] : 50000;
+
 			if(!empty($this->request->get['color'])) $filter_data['filter_color'] = explode("-", $this->request->get['color']);
 			if(!empty($this->request->get['country'])) $filter_data['filter_country'] = explode("-", $this->request->get['country']);
 			if(!empty($this->request->get['model'])) $filter_data['filter_model'] = explode("-", $this->request->get['model']);
@@ -256,11 +258,6 @@ class ControllerProductCategory extends Controller {
 
 
 			
-			//print_r($data['filter_color']);
-			$u = $this->url->link('product/category', $url);
-			$u = htmlspecialchars_decode($u);
-			$data['u'] = html_entity_decode($u);
-
 
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
@@ -491,6 +488,15 @@ class ControllerProductCategory extends Controller {
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
+
+			//Ссылка для фильтра 
+			$url .= '&path=' . $category_id;
+			$u = $this->url->link('product/category', $url);
+			$u = htmlspecialchars_decode($u);
+			$data['u'] = html_entity_decode($u);
+
+
+						
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id']), 'canonical');

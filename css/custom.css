@@ -146,6 +146,9 @@
 .accordion__color [data-attr_ostatok]{
   display: none;
 }
+.submenu {
+  left: 0px;
+}
 
 .checkbox.zhyoltyj span {  background: #fd0; }
 .checkbox.belyj span {  background: #ffffff; border: 1px solid;}

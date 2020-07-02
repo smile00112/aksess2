@@ -45,7 +45,8 @@ class ModelCatalogCategory extends Model {
 		$this->cache->delete('categoryes.all.level.'.$level); 
 		$all_categoryes = $this->cache->get('categoryes.all.level.'.$level);
 		if (!$all_categoryes) {
-			$q_parent = $parent ? " AND c.parent_id = {$parent} " : "";
+			//$q_parent = $parent ? " AND c.parent_id = {$parent} " : "";
+			$q_parent = '';
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) 
 				LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) 
 				WHERE  
