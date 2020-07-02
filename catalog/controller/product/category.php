@@ -233,10 +233,35 @@ class ControllerProductCategory extends Controller {
 			$data['filter_model'] = $filters_attr['attributes'][56]['results'];
 			
 			//Дорабатывает цвета
+			$request_color = !empty($this->request->get['color']) ? $this->request->get['color'] : '';
 			foreach($data['filter_color'] as &$c){
 				$c['translit'] =  $this->getTranslit($c['text']);
+				$c['checked'] = $request_color == $c['text'] ? true : false;
 			}
+
+			$request_manufacturer = !empty($this->request->get['manufacturer']) ? $this->request->get['manufacturer'] : '';
+			foreach($data['filter_manufacturer'] as &$c){
+				$c['checked'] = $request_manufacturer == $c['text'] ? true : false;
+			}
+
+			$request_matherial = !empty($this->request->get['matherial']) ? $this->request->get['matherial'] : '';
+			foreach($data['filter_matherial'] as &$c){
+				$c['checked'] = $request_matherial == $c['text'] ? true : false;
+			}
+
+			$request_model = !empty($this->request->get['model']) ? $this->request->get['model'] : '';
+			foreach($data['filter_model'] as &$c){
+				$c['checked'] = $request_model == $c['text'] ? true : false;
+			}
+
+
+			
 			//print_r($data['filter_color']);
+			$u = $this->url->link('product/category', $url);
+			$u = htmlspecialchars_decode($u);
+			$data['u'] = html_entity_decode($u);
+
+
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
 

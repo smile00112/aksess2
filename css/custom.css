@@ -143,6 +143,10 @@
 .pagination i {
     cursor: pointer
 }
+.accordion__color [data-attr_ostatok]{
+  display: none;
+}
+
 .checkbox.zhyoltyj span {  background: #fd0; }
 .checkbox.belyj span {  background: #ffffff; border: 1px solid;}
 .checkbox.zelyonyj span {  background: #2e7d32; }

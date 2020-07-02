@@ -1,5 +1,47 @@
 {{ header }}
 
+
+<section class="content main__content">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="breads">
+         
+            <a href="/">Главная</a>
+            <i class="sl20"></i>
+          
+          {% for breadcrumb in breadcrumbs %}
+
+      {#      {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}  #}
+              {% if breadcrumb.text %} <span>{{ breadcrumb.text }}</span> {% endif %}
+      {#      {% if breadcrumb.href %}</a>{% endif %} #}
+         
+          {% endfor %}       
+          
+          
+
+				</div>
+
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+        <h1 class="h1__main h1__margin">{{ heading_title }}</h1>
+        
+        {{ content_top }}
+        {{ description }}
+        {{ content_bottom }}
+
+
+				
+			</div>
+		</div>
+	</div>
+</section>
+
+
+{#}
 <div class="content-wrapper">
   <div class="center inner">
     <div class="content">
@@ -29,11 +71,7 @@
                   </div>
               {% endfor %}
               
-              <!--
-              <div class="breadcrumb__item"><span class="breadcrumb__arrow"></span><span
-                  class="breadcrumb__title">{{ breadcrumb.text }}</span></div>
 
-              -->
             </div>
           </div>
 
@@ -53,7 +91,7 @@
   </div>
   </div>    
 </div>  
-
+#}
 <div id="fastview_modal"></div>
 
   {{ footer }}
