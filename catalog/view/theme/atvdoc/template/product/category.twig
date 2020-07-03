@@ -28,7 +28,7 @@
            
 				</div>
 				<div class="block__h1__sort">
-					<h1 class="h1__main">{{ heading_title }}</h1>
+					<h1 class="h1__main">{{ heading_title }} {{ product_total }} товаров</h1>
 					<!--<div class="sort__block">-->
 						<!--<p class="name__sort">Сортировать по цене</p>-->
 						<!--<span class="active"><i class="sl22"></i></span>-->
@@ -300,8 +300,9 @@ class Filter {
 
   function filtered(el_name){
     //console.log(event.target.value)
-    let price_from = document.querySelector('.irs-from').innerHTML;
-    let price_to = document.querySelector('.irs-to').innerHTML;
+    let p_ar = document.querySelector('[name="price"]').value.split(';');
+    let price_from = p_ar[0];
+    let price_to = p_ar[1];
 
     let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
     //Массив выбранных цветов 
@@ -321,20 +322,53 @@ class Filter {
       return item.value;
   });      
 
+        //Обнуляем предполагаемые колличества товарво
+    filter_types.forEach(function(filter_t, i, arr){
+        document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
+           //element.innerHTML = '('+element.innerHTML+')'
+           //console.log(element);
+           if(filter_t != el_name)
+              element.innerHTML = 0;
+/*
+           if(filter_t != el_name)
+             element.innerHTML = 0;
+           else element.innerHTML = '';
+*/
+        });
+    });
       //console.log(selected_manufacturiers);
       let map_filtered = map.filter(function(item, index, array) {
           //console.warn(item, index, array)
          // console.log(selected_colors.length,  selected_manufacturiers.length)
           let price = item.price <= price_to && item.price >= price_from;
-          let color = ( !selected_colors.length ) || ( selected_colors.indexOf(item.color) >=0 || item.color == null ) ;
-          let model = ( !selected_models.length ) || ( selected_models.indexOf(item.model) >=0 || item.model == null ) ;
-          let matherial = ( !selected_matherials.length  ) || ( selected_matherials.indexOf(item.matherial) >=0 || item.matherial == null ) ;
-          let manufacturer = ( !selected_manufacturiers.length ) ||( selected_manufacturiers.indexOf(item.manufacturer) >=0 || item.manufacturer == null ) ;
-         //let price = true;
+          let color = ( !selected_colors.length ) || ( selected_colors.indexOf(item.color) >=0  ) ;
+          let model = ( !selected_models.length ) || ( selected_models.indexOf(item.model) >=0 ) ;
+          let matherial = ( !selected_matherials.length  ) || ( selected_matherials.indexOf(item.matherial) >=0  ) ;
+          let manufacturer = ( !selected_manufacturiers.length ) ||( selected_manufacturiers.indexOf(item.manufacturer) >=0  ) ;
 
+          let $result = color && model && matherial && manufacturer && price;
+
+          if( $result ){
+              filter_types.forEach(function(filter_t, i, arr){
+                  //document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
+                  //element.innerHTML = '('+element.innerHTML+')'
+                    if(filter_t != el_name)
+                    {
+                      if( item != null ){
+                        let el = document.querySelector('[data-attr_ostatok="'+filter_t+'_'+item[filter_t]+'"]');
+                        if(el)
+                          el.innerHTML = el.innerHTML*1+1;
+                      }
+                    }
+        
+                  //});
+              });
+          }
+         //let price = true;
         //console.log(item);
-        //console.log(item.color, color, model, matherial, manufacturer, price);
-         return color && model && matherial && manufacturer && price;
+
+        console.log(item.color, color, model, matherial, manufacturer, price);
+        return $result;
 /*
           if(selected_colors.length && selected_manufacturiers.length  && selected_models.length  && selected_matherials.length )
             return ( selected_colors.indexOf( item.color ) >= 0 || item.color == null )  && 
@@ -355,6 +389,7 @@ class Filter {
       console.error('map_filtered');
       console.error(map_filtered);
 
+/*
       //Обнуляем предполагаемые колличества товаров
       filter_types.forEach(function(filter_t, i, arr){
            document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
@@ -366,8 +401,9 @@ class Filter {
 
           });
       });
-
+*/
       //Заполняем предполагаемые колличества товаров  
+ /*
       map_filtered.forEach(function(item, i, arr){
         filter_types.forEach(function(filter_t, i, arr){
             document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
@@ -383,9 +419,10 @@ class Filter {
           });
         });
       });
-
+*/
 
       //Делаем скобки
+  /*
       filter_types.forEach(function(filter_t, i, arr){
         document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
          if(element.innerHTML)
@@ -393,7 +430,8 @@ class Filter {
         
 
        });
-   });
+      });
+      */
       // console.warn( fitlterItem.value )
       
     }
@@ -403,7 +441,6 @@ document.querySelectorAll('[data-filter_val]').onclick = function() { // пер�
 };
 
 let filter = new Filter();
-
 
 setTimeout(function tick() {
 
@@ -446,16 +483,23 @@ $('.filter-aply').click(function(e){
     e.preventDefault();
 
     var patch = '',
+    var url_t = [];
     $url='{{u}}';
 
     $('.filtr input:checked').each(function(){
-        if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price')
-          patch+='&'+$(this).prop('name')+'='+$(this).val();
+        if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price'){
+          url_t[$(this).prop('name')]+=$(this).val()+';';
+        }
+
         
     });
+    console.log(url_t);
+    //patch+='&'+$(this).prop('name')+'='+$(this).val();
+    alert(patch);
+    return;
     //обработка слайдеров 
     var 
-    p = $('[name="price"]').val()
+    p = $('[name="price"]').val();
     price = p.split(';'),
     price_from = price[0],
     price_to = price[1];

@@ -102,12 +102,15 @@ class ControllerProductCategory extends Controller {
 
 		if ($category_info) {
 			
-			if ($category_info['meta_title']) {
-				$this->document->setTitle($category_info['meta_title']);
-			} else {
-				$this->document->setTitle($category_info['name']);
-			}
-			
+			// if ($category_info['meta_title']) {
+			// 	$this->document->setTitle($category_info['meta_title']);
+			// } else {
+			// 	$this->document->setTitle($category_info['name']);
+			// }
+			if( $page > 1 )  $this->document->setTitle($category_info['meta_title'].', страница '.$page);
+				else $this->document->setTitle($category_info['meta_title']);
+
+
 			if ($category_info['noindex'] <= 0) {
 				$this->document->setRobots('noindex,follow');
 			}
@@ -188,14 +191,15 @@ class ControllerProductCategory extends Controller {
 			);
 			if(!empty($this->request->get['price_from'])) $filter_data['filter_price_from'] = $this->request->get['price_from'];
 			if(!empty($this->request->get['price_to'])) $filter_data['filter_price_to'] = $this->request->get['price_to'];
+
 			$data['price_from'] = !empty($this->request->get['price_from']) ? $this->request->get['price_from'] : 0;
 			$data['price_to'] = !empty($this->request->get['price_to']) ? $this->request->get['price_to'] : 50000;
 
-			if(!empty($this->request->get['color'])) $filter_data['filter_color'] = explode("-", $this->request->get['color']);
-			if(!empty($this->request->get['country'])) $filter_data['filter_country'] = explode("-", $this->request->get['country']);
-			if(!empty($this->request->get['model'])) $filter_data['filter_model'] = explode("-", $this->request->get['model']);
-			if(!empty($this->request->get['matherial'])) $filter_data['filter_matherial'] = explode("-", $this->request->get['matherial']);
-			if(!empty($this->request->get['manufacturer'])) $filter_data['filter_manufacturer'] = explode("-", $this->request->get['manufacturer']);			
+			if(!empty($this->request->get['color'])) $filter_data['filter_color'] = explode(";", $this->request->get['color']);
+			if(!empty($this->request->get['country'])) $filter_data['filter_country'] = explode(";", $this->request->get['country']);
+			if(!empty($this->request->get['model'])) $filter_data['filter_model'] = explode(";", $this->request->get['model']);
+			if(!empty($this->request->get['matherial'])) $filter_data['filter_matherial'] = explode(";", $this->request->get['matherial']);
+			if(!empty($this->request->get['manufacturer'])) $filter_data['filter_manufacturer'] = explode(";", $this->request->get['manufacturer']);			
 
 			//if(!empty($this->request->get['category'])) $filter_data['filter_categoryes_id'] = $this->request->get['category'];
 			// if(!empty($this->request->get['effects'])) $filter_data['filter_effects'] = $this->request->get['effects'];
@@ -220,8 +224,9 @@ class ControllerProductCategory extends Controller {
 			$filters_attr = [];
 
 			//Варианты для фильтра
-			$filters_attr['price']['min'] = 50;
-			$filters_attr['price']['max'] = 50000;
+			$filters_attr['price']['min'] = $data['price_from'];
+			$filters_attr['price']['max'] = $data['price_to'];
+			
 			$filters_attr['attributes'] = $this->model_catalog_category->getAllFilters_atr($filter_data_wl);
 
 
@@ -498,7 +503,7 @@ class ControllerProductCategory extends Controller {
 
 						
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-			if ($page == 1) {
+			if ($page != 1) {
 			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id']), 'canonical');
 			} else {
 				$this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. $page), 'canonical');
