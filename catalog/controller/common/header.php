@@ -64,7 +64,7 @@ class ControllerCommonHeader extends Controller {
 		$data['current_page_link'] = trim($server, '/').$current_page;
 		$data['current_page'] = $current_page;
 
-		//Подключаем меню каталога для мобильной версии  (потом убрать для мобильной версии)
+		//Подключаем меню каталога
 		$this->load->model('catalog/category');
 		$data['categories'] = array();
 		$categories = $this->model_catalog_category->getAllCategories(0, 34718);

@@ -1,5 +1,11 @@
 
 $(function ($) {
+	//Увееличение на стр товара
+	$('.img-popup-link').magnificPopup({
+		type: 'image'
+		// other options
+	  });
+	  
 	//Делаем разряд у чисел
 //	$('.product-item__price, .header-cart__del-info').text();
 	$('.product-item__price, .header-cart__del-info, .header-cart__sum').each(function(){

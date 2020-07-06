@@ -1,6 +1,270 @@
 {{ header }}
 
 
+<section class="content main__content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="breads">
+
+          {% for breadcrumb in breadcrumbs %}
+
+              {% if breadcrumb.href %} 
+                <a class="breadcrumb__link" href="{{ breadcrumb.href }}" itemprop="url" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+              {% endif %}
+                  <span class="breadcrumb__title" itemprop="title">
+                    {{ breadcrumb.text }}
+                  </span>
+              {% if breadcrumb.href %}
+              <i class="sl20"></i>
+
+              </a>
+              {% endif %}
+
+          {% endfor %}
+
+        </div>
+        <!-- <div class="block__h1__sort">
+          <h1 class="h1__main">Аккумуляторы для телефонов</h1>
+        </div> -->
+        <div class="block__image">
+          <div class="block__image--left">
+            <div class="main__photo">
+              <meta content="{{ popup }}" itemprop="image" />
+              <a rel="lightbox" class="catalog-detail-images fancybox img-popup-link" href="{{ popup }}">
+                <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" />
+              </a>
+            </div>
+            <div class="second__photo">
+              <p><img src="img/item3.png" alt=""></p>
+              <p><img src="img/item3.png" alt=""></p>
+            </div>
+          </div>
+          <div class="block__image--right">
+            <h1>{{ heading_title }}</h1>
+            <div class="articul__item">Артикул: <span>{{ sku }}</span></div>
+            <div class="price__item">{{ price_not_formated }} <span>руб.</span></div>
+            {% if quantity >0 %} <div class="yes__sklad">Есть</div> {% else %} <div class="no__sklad">Нет</div> {% endif %}
+            <div class="block__button_bay">
+              <div class="block__button_bay--left">
+                <span class="minus" onclick="if(product_quantity.value > 1) product_quantity.value--"></span>
+                <input type="text" id="product_quantity" value="1">
+                <span class="plus" onclick="product_quantity.value++"></span>
+              </div>
+              <div class="block__button_bay--right">
+
+                <div class="bay__button ">
+                  <button class="hvr-fade" id = "product_{{ product_id }}_addbtn" name="add2basket" onclick="cart.add('{{ product_id }}', product_quantity.value);">Купить</button>
+                </div>
+              </div>
+            </div>
+            .
+          </div>
+        </div>
+
+
+        <div class="row"> 
+          <div class="col">
+            <h2 class="h2__main"><span>Рекомендуемые товары </span></h2>
+
+          {% set i = 0 %}
+          {% for product in products %}
+
+
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+          <div class="{{ class }}">
+            <div class="product-thumb transition">
+              <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}"
+                    title="{{ product.name }}" class="img-responsive" /></a></div>
+              <div class="caption">
+                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                <p>{{ product.description }}</p>
+                {% if product.rating %}
+                <div class="rating"> {% for j in 1..5 %}
+                  {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                  {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i
+                      class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
+                  {% endfor %} </div>
+                {% endif %}
+                {% if product.price %}
+                <p class="price"> {% if not product.special %}
+                  {{ product.price }}
+                  {% else %} <span class="price-new">{{ product.special }}</span> <span
+                    class="price-old">{{ product.price }}</span> {% endif %}
+                  {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+                {% endif %}
+              </div>
+              <div class="button-group">
+                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span
+                    class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i
+                    class="fa fa-shopping-cart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}"
+                  onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+                <button type="button" data-toggle="tooltip" title="{{ button_compare }}"
+                  onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              </div>
+            </div>
+          </div>
+   
+  
+          {% set i = i + 1 %}
+          {% endfor %} 
+        
+        </div>
+      </div>
+
+        <div class="row">
+          <div class="col">
+            <h2 class="h2__main"><span>Рекомендуемые товары </span></h2>
+            <div class="owl-carousel owl-theme slide-three">
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><img src="img/item3.png" alt=""></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><a href=""><img src="img/item3.png" alt=""></a>a>
+                  </p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><img src="img/item4.png" alt=""></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии</p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="item">
+                <div class="block__item-default">
+                  <p class="conteiner__image"><img src="img/item3.png" alt=""></p>
+                  <p class="block__item-default--artikul"><span>Артикул: </span>
+                    <span>4233664</span></p>
+                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
+                      Partner для iPhone 4</span></p>
+                  <div class="block__item-default-basket">
+                    <p class="block__item-default-price"><span>599</span> руб </p>
+                    <p><button class="hvr-fade">Купить </button></p>
+                  </div>
+                  <div class="block__item-default-comparison">
+                    <p class="block__item-default--text">В наличии </p>
+                    <p class="comparison"><i class="sl12"></i></p>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+
+
+
+
 <div class="content-wrapper">
   <div class="center inner">
     <div class="content">

@@ -147,10 +147,13 @@ function view_preloder($show){
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {
-		var $q = $( '#product_'+product_id+'_quantity' ).val();
-		if( typeof($q) != 'undefined' ){
-			quantity = $q;
-		}
+		
+		/*
+			var $q = $( '#product_'+product_id+'_quantity' ).val();
+			if( typeof($q) != 'undefined' ){
+				quantity = $q;
+			}
+		*/
 		$.ajax({
 			url: 'index.php?route=checkout/cart/add',
 			type: 'post',

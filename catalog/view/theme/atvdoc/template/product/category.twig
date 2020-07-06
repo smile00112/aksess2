@@ -24,7 +24,7 @@
                    <i class="sl20"></i>
                   {% endif %}
 
-            {% endfor %}
+              {% endfor %}
            
 				</div>
 				<div class="block__h1__sort">
@@ -483,20 +483,23 @@ $('.filter-aply').click(function(e){
     e.preventDefault();
 
     var patch = '',
-    var url_t = [];
+    url_t = [];
     $url='{{u}}';
 
+    //Собираем выбранные параметры
     $('.filtr input:checked').each(function(){
         if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price'){
+          if(!!!url_t[$(this).prop('name')]) url_t[$(this).prop('name')] = '';
           url_t[$(this).prop('name')]+=$(this).val()+';';
         }
-
-        
     });
-    console.log(url_t);
-    //patch+='&'+$(this).prop('name')+'='+$(this).val();
-    alert(patch);
-    return;
+    //Делаем ссылку
+     for (key in url_t) {
+      //console.log(key, url_t[key]);
+      patch+='&'+key+'='+url_t[key];
+      //elem.remove();
+    };
+
     //обработка слайдеров 
     var 
     p = $('[name="price"]').val();

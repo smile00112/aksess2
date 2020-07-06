@@ -214,7 +214,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $product_info['name'],
-				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
+				//'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
 			);
 
 			if ($product_info['meta_title']) {
@@ -263,6 +263,7 @@ class ControllerProductProduct extends Controller {
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['sku'] = $product_info['sku'];
 			$data['upc'] = $product_info['upc'];
+			$data['quantity'] = $product_info['quantity'];
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -305,6 +306,7 @@ class ControllerProductProduct extends Controller {
 
 
 			$data['price'] = number_format($product_info['price'], 0, '.', ' ').' руб.';
+			$data['price_not_formated'] =  number_format($product_info['price'], 0, '.', ' ');
 
 			if(!empty($product_info['special'])){
 				if ((float)$product_info['special']) {
@@ -528,7 +530,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/product', $url . '&product_id=' . $product_id)
+				//'href' => $this->url->link('product/product', $url . '&product_id=' . $product_id)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));
@@ -674,6 +676,8 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['price'] = false;
 			}
+
+			$data['price_not_formated'] = $product_info['price'];
 			//$data['price'] = number_format($data['price'], 0, '.', ' ').' руб.';	 
 			
 			if ((float)$product_info['special']) {
