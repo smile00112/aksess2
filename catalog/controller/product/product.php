@@ -406,6 +406,7 @@ class ControllerProductProduct extends Controller {
 			$data['products'] = array();
 
 			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			if(!$results) $results = $this->model_catalog_product->getProductRelatedInCategory($category_info['category_id']);
 
 			foreach ($results as $result) {
 				if ($result['image']) {

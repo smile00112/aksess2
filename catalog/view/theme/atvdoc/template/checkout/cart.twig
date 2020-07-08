@@ -1,5 +1,204 @@
 {{ header }}
 
+<section class="content">
+  <div class="container">
+      <div class="row">
+          <div class="col">
+              <div class="breads">
+                  {% for breadcrumb in breadcrumbs %}
+
+                  <div class="breadcrumb__item"  itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+                      
+                      {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}
+                        <span class="breadcrumb__title" itemprop="title">
+                          {{ breadcrumb.text }}
+                        </span>
+                        {% if breadcrumb.href %}</a><i class="sl20"></i>{% endif %}
+                        
+                  </div>
+
+                  {% endfor  %}
+
+              <div class="block__h1__sort">
+                  <h1 class="h1__main">Корзина</h1>
+              </div>
+
+
+          </div>
+
+      </div>
+  </div>
+  </div>
+</section>
+<section class="content main__content">
+  <div class="container">
+      <div class="row">
+          <div class="col">
+              <div class="main__basket__block">
+                  <div class="main__basket__block--left">
+
+                    {% for product in products %}
+
+                    <div class="line__basket" id="{{ product.cart_id }}">
+                      <div class="line__basket--img">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</div>
+                      <div class="line__basket--name">
+                          <p class="main__basket--text"><a href="{{ product.href }}">{{ product.name }}</a></p>
+                          <p class="main__basket--art">Артикул: {{ product.sku }}</p>
+                          <p class="main__basket--del"><a class="setaside" href="/personal/cart/?action=delay&amp;id=18023" title="Отложить">Удалить из корзины</a></p>
+                      </div>
+                      <div class="line__basket--count">
+                          <div class="block__button_bay--left">
+                              <span class="minus"></span>
+                              <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="carrttt-input quantity form-control" />
+                              <span class="plus"></span>
+                          </div>
+                          <div class="yes__sklad">Есть</div>
+                      </div>
+                      <div class="line__basket--price">
+                          <div class="price__item">{{ product.price }} <span>руб.</span></div>
+                      </div>
+                  </div>
+
+
+
+
+
+                    <div class="tr" id="{{ product.cart_id }}">
+                      <div class="tr_into">
+                        <div class="cart-item-image">
+                          {% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}
+                        </div>
+                        <div class="cart-item-name">
+                          <a href="{{ product.href }}">{{ product.name }}</a>
+                        </div>
+
+                        <div class="cart-item-price">
+                          <div class="old-price" id="">
+                          </div>
+                          <div class="price" id="">
+                            {{ product.price }} </div>
+                          <div class="unit">
+                            за <span id="">шт</span>
+                          </div>
+                        </div>
+
+                        <div class="cart-item-quantity">
+                          <div style="float:right;" class="buy_more">
+                            <a href="javascript:void(0)" class="minus" onclick="cart.setQuantity({{ product.cart_id }},  'down' );"><span>-</span></a>
+                                                            
+                            <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="carrttt-input quantity form-control" />
+                           
+                            <a href="javascript:void(0)" class="plus" onclick="cart.setQuantity({{ product.cart_id }}, 'up' );"><span>+</span></a>
+                          </div>
+                        </div>
+
+                        <div class="cart-item-summa" id="" data-itemsum="" data-separator=" "
+                          data-decimal="0" data-dec-point="." data-hide-zero="Y">
+                          <span class="sum">
+                            <span id="itemSumVal_{{ product.cart_id }}">{{ product.total }}</span>
+                           {#<span class="curr"> руб.</span>#}
+                          </span>
+                        </div>
+                        <div class="cart-item-actions">
+                          <div class="delay">
+                            <a class="setaside" href="/personal/cart/?action=delay&amp;id=18023" title="Отложить"><i
+                                class="fa fa-heart-o"></i></a>
+                          </div>
+                          <div class="delete">
+                            <a class="deleteitem" href="/checkout/cart/?action=delete&id={{ product.cart_id }}"
+                              onclick="cart.remove({{ product.cart_id }});" title="Удалить"><i class="fa fa-trash-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+               {% endfor %}
+
+
+
+                      
+
+                      <div class="line__basket">
+                          <div class="line__basket--img"><img src="img/item4.png" alt=""></div>
+                          <div class="line__basket--name">
+                              <p class="main__basket--text">Карта памяти microSDXC 128GB V30, UHS-I Class 3 (U3),
+                                  R:90MB/s, W:45MB/s, с
+                                  адаптером, OLMIO</p>
+                              <p class="main__basket--art">Артикул: 00068954</p>
+                              <p class="main__basket--del">Удалить из корзины</p>
+                          </div>
+                          <div class="line__basket--count">
+                              <div class="block__button_bay--left">
+                                  <span class="minus"></span>
+                                  <input type="text">
+                                  <span class="plus"></span>
+                              </div>
+                              <div class="yes__sklad">Есть</div>
+                          </div>
+                          <div class="line__basket--price">
+                              <div class="price__item">1850 <span>руб.</span></div>
+                          </div>
+                      </div>
+
+                      <div class="line__basket">
+                          <div class="line__basket--img"><img src="img/item4.png" alt=""></div>
+                          <div class="line__basket--name">
+                              <p class="main__basket--text">Карта памяти microSDXC 128GB V30, UHS-I Class 3 (U3),
+                                  R:90MB/s, W:45MB/s, с
+                                  адаптером, OLMIO</p>
+                              <p class="main__basket--art">Артикул: 00068954</p>
+                              <p class="main__basket--del">Удалить из корзины</p>
+                          </div>
+                          <div class="line__basket--count">
+                              <div class="block__button_bay--left">
+                                  <span class="minus"></span>
+                                  <input type="text">
+                                  <span class="plus"></span>
+                              </div>
+                              <div class="yes__sklad">Есть</div>
+                          </div>
+                          <div class="line__basket--price">
+                              <div class="price__item">1850 <span>руб.</span></div>
+                          </div>
+                      </div>
+                      <div class="result__summ">
+                          <div class="result__summ__line">
+                              <span>Всего товаров:</span>
+                              <span>1</span>
+                          </div>
+                          <div class="result__summ__line">
+                              <span>Сумма заказа:</span>
+                              <span>1790<span>руб.</span></span>
+                          </div>
+                          <div class="result__summ__line">
+                              <span class="result__orange">Итого:</span>
+                              <span class="result__orange result__orange--pluss">1790<span
+                                      class="result__orange result__orange--pluss">руб.</span></span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="main__basket__block--right">2</div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="content-wrapper">
   <div class="center inner">
     <div class="content">
@@ -11,6 +210,9 @@
 
 
       </div>
+
+
+
 
 
       <div class="workarea {{ class }}" id="content">

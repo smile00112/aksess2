@@ -17,7 +17,7 @@ class ControllerCheckoutCart extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('checkout/cart'),
+			//'href' => $this->url->link('checkout/cart'),
 			'text' => $this->language->get('heading_title')
 		);
 

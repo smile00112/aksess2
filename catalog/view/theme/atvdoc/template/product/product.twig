@@ -36,8 +36,9 @@
               </a>
             </div>
             <div class="second__photo">
-              <p><img src="img/item3.png" alt=""></p>
-              <p><img src="img/item3.png" alt=""></p>
+              {# Миниатуры #}
+              <p><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" /></p>
+
             </div>
           </div>
           <div class="block__image--right">
@@ -66,192 +67,45 @@
         <div class="row"> 
           <div class="col">
             <h2 class="h2__main"><span>Рекомендуемые товары </span></h2>
-
+            <div class="owl-carousel owl-theme slide-three">
           {% set i = 0 %}
           {% for product in products %}
 
 
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-
-
-
-
-          <div class="{{ class }}">
-            <div class="product-thumb transition">
-              <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}"
-                    title="{{ product.name }}" class="img-responsive" /></a></div>
-              <div class="caption">
-                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-                <p>{{ product.description }}</p>
-                {% if product.rating %}
-                <div class="rating"> {% for j in 1..5 %}
-                  {% if product.rating < j %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                  {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i
-                      class="fa fa-star-o fa-stack-1x"></i></span> {% endif %}
-                  {% endfor %} </div>
+          <div class="item" data-product_item="{{ product.product_id }}">
+  
+            <div class="block__item-default">
+              <p class="conteiner__image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.model }}" ></a></p>
+              <p class="block__item-default--artikul"><span>Артикул: 	</span> <span>{{ product.model }}</span></p>
+              <p class="block__item-default--text"><a href="{{ product.href }}"><span>{{ product.name }}</span></a></p>
+              <div class="block__item-default-basket">
+                {% if not product.special %}
+                  <p class="block__item-default-price">{{ product.price }}</p>
+                {% else %} 
+                  <p class="block__item-default-price price-new">{{ product.special }}</p> 
+                  <p class="block__item-default-price-old">{{ product.price }}</p> 
                 {% endif %}
-                {% if product.price %}
-                <p class="price"> {% if not product.special %}
-                  {{ product.price }}
-                  {% else %} <span class="price-new">{{ product.special }}</span> <span
-                    class="price-old">{{ product.price }}</span> {% endif %}
-                  {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
-                {% endif %}
+    
+                
+                <p><button class="hvr-fade cart-btn" onclick="cart.add('{{ product.product_id }}');">Купить </button></p>
               </div>
-              <div class="button-group">
-                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span
-                    class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i
-                    class="fa fa-shopping-cart"></i></button>
-                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}"
-                  onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-                <button type="button" data-toggle="tooltip" title="{{ button_compare }}"
-                  onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+              <div class="block__item-default-comparison">
+                <p class="block__item-default--text">В наличии</p>
+                {% if quantity >0 %}  <p class="block__item-default--text">В наличии</p> {% else %}  <p class="block__item-default--text">Нет в наличии</p> {% endif %}
+                <p class="comparison wishlist-btn" onclick="wishlist.add('{{ product.product_id }}');"><i class="sl12"></i></p>
               </div>
             </div>
+    
           </div>
-   
-  
+
+         
           {% set i = i + 1 %}
           {% endfor %} 
-        
+            </div>
         </div>
       </div>
 
-        <div class="row">
-          <div class="col">
-            <h2 class="h2__main"><span>Рекомендуемые товары </span></h2>
-            <div class="owl-carousel owl-theme slide-three">
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><img src="img/item3.png" alt=""></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
 
-              </div>
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><a href=""><img src="img/item3.png" alt=""></a>a>
-                  </p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><a href=""><img src="img/item4.png" alt=""></a></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><img src="img/item4.png" alt=""></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии</p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-              <div class="item">
-                <div class="block__item-default">
-                  <p class="conteiner__image"><img src="img/item3.png" alt=""></p>
-                  <p class="block__item-default--artikul"><span>Артикул: </span>
-                    <span>4233664</span></p>
-                  <p class="block__item-default--text"><span>Автомобильное зарядное устройство
-                      Partner для iPhone 4</span></p>
-                  <div class="block__item-default-basket">
-                    <p class="block__item-default-price"><span>599</span> руб </p>
-                    <p><button class="hvr-fade">Купить </button></p>
-                  </div>
-                  <div class="block__item-default-comparison">
-                    <p class="block__item-default--text">В наличии </p>
-                    <p class="comparison"><i class="sl12"></i></p>
-                  </div>
-                </div>
-
-              </div>
-
-
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -260,452 +114,12 @@
 </section>
 
 
-
-
-
-
-
-<div class="content-wrapper">
-  <div class="center inner">
-    <div class="content">
-      <div class="left-column">
-
-        {{ column_left }}
-
-        {{ column_right }}
-
-
-      </div>
-
-
-      <div class="workarea {{ class }}" id="content">
-        <div class="body_text">
-
-          <div class="breadcrumb-share">
-            <div id="navigation" class="breadcrumb">
-
-              {% for breadcrumb in breadcrumbs %}
-
-              <div class="breadcrumb__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"
-                itemprop="child">
-                <span class="breadcrumb__arrow"></span>
-                {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title=" "
-                  itemprop="url">{% endif %}
-                  <span class="breadcrumb__title" itemprop="title">
-                    {{ breadcrumb.text }}
-                  </span>
-                  {% if breadcrumb.href %}</a>{% endif %}
-              </div>
-              {% endfor %}
-
-              <!--
-              <div class="breadcrumb__item"><span class="breadcrumb__arrow"></span><span
-                  class="breadcrumb__title">{{ breadcrumb.text }}</span></div>
-
-              -->
-            </div>
-          </div>
-
-          <h1 id="pagetitle">{{ heading_title }}</h1>
-          {{ content_top }}
-
-
-
-          <div id="" class="catalog-detail-element" itemscope itemtype="http://schema.org/Product">
-            <meta content="{{ heading_title }}" itemprop="name" />
-            <div class="catalog-detail">
-              <div class="column first">
-                <div class="catalog-detail-pictures">
-                  <div class="catalog-detail-picture" id="">
-                    <div class="detail_picture">
-                      <meta content="{{ popup }}" itemprop="image" />
-                      <a rel="lightbox" class="catalog-detail-images fancybox" href="{{ popup }}">
-                        <img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" />
-                        <div class="time_buy_sticker">
-                        </div>
-                        <div class="sticker">
-                        </div>
-                        <img class="manufacturer" src="{{ manufacturer_image }}" alt="{{ manufacturer }}"
-                          title="{{ manufacturer }}" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="clr"></div>
-                  <div class="more_photo">
-                    <ul>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="column second">
-                <div class="catalog-detail">
-                  <div class="article_rating">
-                    <div class="catalog-detail-article" id="">
-                      <div class="article">
-                        Артикул:  {{ sku }}
-                      </div>
-                      <div class="article">
-                        Код поставщика:  {{ upc }}
-                      </div>
-                      
-                    </div>
-                    
-                  </div>
-
-                  <div class="catalog-detail-preview-text" itemprop="description">
-                    {{ description }}
-                  </div>
-
-                  <div class="advantages">
-                    <div class="advantages-item">
-                      <div class="advantages-item-icon-wrap">
-                        <div class="advantages-item-icon">
-                          <i class="fa fa-truck"></i>
-                        </div>
-                      </div>
-                      <div class="advantages-item-text">
-                        Бесплатная доставка по Брянску от 5000 руб. </div>
-                    </div>
-                    <div class="advantages-item">
-                      <div class="advantages-item-icon-wrap">
-                        <div class="advantages-item-icon">
-                          <i class="fa fa-star-o"></i>
-                        </div>
-                      </div>
-                      <div class="advantages-item-text">
-                        Все товары сертифицированы </div>
-                    </div>
-                    <div class="advantages-item">
-                      <div class="advantages-item-icon-wrap">
-                        <div class="advantages-item-icon">
-                          <i class="fa fa-thumbs-o-up"></i>
-                        </div>
-                      </div>
-                      <div class="advantages-item-text">
-                        Возможна покупка любого товара в кредит </div>
-                    </div>
-                    <div class="advantages-item">
-                      <div class="advantages-item-icon-wrap">
-                        <div class="advantages-item-icon">
-                          <i class="fa fa-history"></i>
-                        </div>
-                      </div>
-                      <div class="advantages-item-text">
-                        Возможна доставка «Сегодня на сегодня» </div>
-                    </div>
-                  </div>
-                  <div class="column three">
-                    <div class="price_buy_detail" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                      <div class="catalog-detail-price" id="bx_117848907_213_price">
-                        <span class="catalog-detail-item-price">
-                          <span class="catalog-detail-item-price-current">
-                            {{ price }}
-                          </span>
-                          <span class="unit">
-                            за 1 шт 
-                          </span>
-                        </span>
-                        <meta itemprop="price" content="{{ price }}" />
-                        <meta itemprop="priceCurrency" content="RUB" />
-                        <div class="available">
-                          <meta content="InStock" itemprop="availability" />
-                          <div class="avl">
-                            <i class="fa fa-check-circle"></i>
-                            <span>
-                              В наличии {% if product.quantity >5 %}много{% else %}мало{% endif %}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="catalog-detail-buy" id="bx_117848907_213_buy">
-
-                        <div class="buy_more_detail">
-                          <form action="/ajax/add2basket.php" class="add2basket_form">
-                         
-                            <div class="qnt_cont">
-                              <a href="javascript:void(0)" class="minus" ><span>-</span></a> 
-                              <input type="text" name="quantity" id="product_{{ product_id }}_quantity" max="777{# quantity #}" data-limit="777" class="quantity" value="1" >
-                              <a href="javascript:void(0)" class="plus" max="777{# quantity #}" data-limit="777"
-                                ><span>+</span></a>
-                            </div>
-                            <input type="hidden" name="ID" value="{{ product_id }}">
-                            <button type="button" 
-                              class="btn_buy detail"
-                              id = "product_{{ product_id }}_addbtn"
-                              name="add2basket"
-                              onclick="cart.add('{{ product_id }}', '1');">
-                              <i class="fa fa-shopping-cart"></i>
-                              <span>В корзину</span>
-                            </button> 
-  
-                            
-                          </form>
-						<!--
-                           <button id="" class="btn_buy boc_anch" data-action="boc">
-                             <i class="fa fa-bolt"></i><span>Купить в 1 клик</span>
-                          </button>
-						  -->
-                        <a id="" class="btn_buy apuo cheaper_anch" href="javascript:void(0)" rel="nofollow" data-action="cheaper" style="width: 80%;">
-                          <i class="fa fa-commenting-o"></i><span>Нашли дешевле?</span>
-                        </a>
-
-                        <div class="catalog-detail-delay" id="" style="padding: 5px 0;">
-                          <div class="delay">
-                            <a href="javascript:void(0)" 
-                              class="catalog-item-delay"
-                              id = "product_{{ product_id }}_addwishlistbtm"
-                              onclick="wishlist.add('{{ product_id }}');"
-                              rel="nofollow">
-                              <span class="delay_cont">
-                                <i class="fa fa-heart-o"></i>
-                                <i class="fa fa-check"></i>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-
-                        </div>
-                      </div>
-
-                      <div id="">
-                      </div>
-                      {#  <div class="compare_delay">
-                      
-                        <div class="compare">
-                          <a href="javascript:void(0)" class="catalog-item-compare"
-                            id="catalog_add2compare_link_bx_117848907_213"
-                            onclick="return addToCompare('/catalog/compare/?action=ADD_TO_COMPARE_LIST&amp;id=213', 'catalog_add2compare_link_bx_117848907_213', '/');"
-                            rel="nofollow"><span class="compare_cont"><i class="fa fa-bar-chart"></i><i
-                                class="fa fa-check"></i><span class="compare_text">Сравнить</span></span></a>
-                        </div>
-                       
-                      </div> #}
- 
-
-<!--
-                      <div class="payment_methods">
-                        <div class="h3">Способы оплаты</div>
-                        <ul>
-                                <li>
-                                        <a href="javascript:void(0)" title="VISA">
-                                        <img src="/image/catalog/payments/059cab1fb81a59f3d1a6879cea1b078c.png" width="66" height="30" alt="VISA">
-                              </a>
-                            </li>
-                                <li>
-                                        <a href="javascript:void(0)" title="MasterCard">
-                                        <img src="/image/catalog/payments/80c95d6bc2fc2ca9ee528dd754b5586c.png" width="66" height="30" alt="MasterCard">
-                              </a>
-                            </li>
-                                <li>
-                                        <a href="javascript:void(0)" title="WebMoney">
-                                        <img src="/image/catalog/payments/a8556ed007062b1cb92d33ae60209205.png" width="66" height="30" alt="WebMoney">
-                              </a>
-                            </li>
-                                <li>
-                                        <a href="javascript:void(0)" title="Яндекс.Деньги">
-                                        <img src="/image/catalog/payments/0bcfec7e41ded87e93b95fc5c178df1b.png" width="66" height="30" alt="Яндекс.Деньги">
-                              </a>
-                            </li>
-                                <li>
-                                        <a href="javascript:void(0)" title="QIWI">
-                                        <img src="/image/catalog/payments/f5e41dd842e2ff04eaf4db298c306082.png" width="66" height="30" alt="QIWI">
-                              </a>
-                            </li>
-                                <li>
-                                        <a href="javascript:void(0)" title="Наличный расчет">
-                                        <img src="/image/catalog/payments/6cb2948c4aa7d67013cfd4e29a66c892.png" width="66" height="30" alt="Наличный расчет">
-                              </a>
-                            </li>
-                            </ul>
-                    </div>	
--->
-
-                      <div class="catalog-detail-buttons">
-                        <a rel="nofollow" target="_blank" href="/payments/" class="btn_buy apuo pcd"><i
-                            class="fa fa-credit-card"></i><span>Все способы оплаты</span></a>
-                        <a rel="nofollow" target="_blank" href="/credit/" class="btn_buy apuo pcd"><i
-                            class="fa fa-percent"></i><span>Можно оформить в кредит</span></a>
-                      </div>
-                      <div id="bx_117848907_213_geolocation_delivery">
-                      </div>
-                      <div class="catalog-detail-buttons">
-                        <a rel="nofollow" target="_blank" href="/delivery/" class="btn_buy apuo pcd"><i
-                            class="fa fa-truck"></i><span>Подробнее о доставке</span></a>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-                <div id="bx_117848907_213_main_properties">
-                  <div class="catalog-detail-properties">
-                    <div class="h4">Основные характеристики</div>
-                    <div class="catalog-detail-property">
-                      <div class="name">Производитель</div>
-                      <div class="dots"></div>
-                      <div class="val"><a href="{{ manufacturers }}">{{ manufacturer }}</a></div>
-                    </div>
-
-                        {% if attribute_groups %}
-                            
-                            {% for attribute_group in attribute_groups %}
-                                {#
-                                <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
-                                #}
-
-                              {% for attribute in attribute_group.attribute %}
-                                <div class="catalog-detail-property">
-                                  <div class="name">{{ attribute.name }}</div>
-                                  <div class="dots"></div>
-                                  <div class="val">{{ attribute.text }}</div>
-                                </div>
-                              {% endfor %}
-                            
-                            {% endfor %}
-                          
-                        {% endif %}
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-          
-
-                        
-
-            <!--'start_frame_cache_OhECjo'-->
-            <span id="sale_gift_product_1418239674" class="sale_prediction_product_detail_container"></span>
-
-                        <!--'end_frame_cache_OhECjo'-->
-            <div class="tabs-wrap tabs-catalog-detail">
-              <ul class="tabs">
-              
-              {% if heading_title %}
-                <li class="tabs__tab current">
-                  <a href="#tab1"><span>Описание</span></a>
-                </li>
-             {% endif %}
-
-                <li class="tabs__tab">
-                  <a href="#tab2"><span>Характеристики</span></a>
-                </li>
-
-              </ul>
-              {% if heading_title %}
-              <div class="tabs__box" style='display:block;'>
-                <div class="tabs__box-content">
-                  {{ heading_title }}  {{ description }}
-                </div>
-              </div>
-              {% endif %}
-
-              <div class="tabs__box">
-                <div id="bx_117848907_213_properties">
-                  <div class="catalog-detail-properties">
-                    <div class="catalog-detail-property">
-                      <div class="name">Производитель</div>
-                      <div class="dots"></div>
-                      <div class="val"><a href="{{ manufacturers }}">{{ manufacturer }}</a></div>
-                    </div>
-                    {% if attribute_groups %}
-                   
-                        {% for attribute_group in attribute_groups %}
-                            {#
-                            <td colspan="2"><strong>{{ attribute_group.name }}</strong></td>
-                            #}
-
-                          {% for attribute in attribute_group.attribute %}
-                            <div class="catalog-detail-property">
-                              <div class="name">{{ attribute.name }}</div>
-                              <div class="dots"></div>
-                              <div class="val">{{ attribute.text }}</div>
-                            </div>
-                          {% endfor %}
-                       
-                        {% endfor %}
-                     
-                    {% endif %}
-
-                    {#
-                    <div class="catalog-detail-property">
-                      <div class="name">Производство</div>
-                      <div class="dots"></div>
-                      <div class="val">Китай</div>
-                    </div>
-                    <div class="catalog-detail-property">
-                      <div class="name">Частота холостого хода, об/мин</div>
-                      <div class="hint-wrap">
-                        <a class="hint" href="javascript:void(0);"
-                          onclick="showDetailPropertyFilterHint(this, '<b>Холостой ход</b> — режим работы какого-либо устройства, обычно источника механической или электрической энергии, при отключенной нагрузке.');"><i
-                            class="fa fa-question-circle-o"></i></a>
-                      </div>
-                      <div class="dots"></div>
-                      <div class="val">15000-35000</div>
-                    </div>
-                    <div class="catalog-detail-property">
-                      <div class="name">Вес, кг</div>
-                      <div class="dots"></div>
-                      <div class="val">0.6</div>
-                    </div>
-
-                    #}
-                  </div>
-                </div>
-              </div>
 {#
-              <div class="tabs__box">
-                <div id="">
-                                    <div id="catalog-detail-stores-from" class="catalog-detail-stores-from">
-                    <div class="catalog-detail-store" style="display: ;">			
-              <span class="name">
-                Магазин 1 (г. Москва, ул. Фадеева 2), график: ПН-ПТ 9:00 - 22:00								
-              </span>
-              <span class="val">0</span>
-            </div>
-              <div class="catalog-detail-store" style="display: ;">			
-              <span class="name">
-                Магазин 2 (Москва, 4 Добрыненский переулок 6), график: ПН-СБ 9:00 - 23:00								
-              </span>
-              <span class="val">0</span>
-            </div>
-                </div></div>
-              </div>
+{{ column_left }}
+
+{{ column_right }}
+
 #}
-            </div>
-            <div class="clr"></div>
-          </div>
-
-
-
-
-
-          <!-- items-container -->
-
-
-
-
-
-          {{ content_bottom }}
-
-
-        </div>
-      
-
-
-
-
-
-
-
-
-
-
-      
-      </div>
-
-    </div>
-  </div>
-
 
 
 <script>

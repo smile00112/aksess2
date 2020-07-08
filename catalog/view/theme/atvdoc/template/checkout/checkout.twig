@@ -1,5 +1,129 @@
 {{ header }}
 
+
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breads">
+                    {% for breadcrumb in breadcrumbs %}
+
+                    <div class="breadcrumb__item"  itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+                        
+                        {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}
+                          <span class="breadcrumb__title" itemprop="title">
+                            {{ breadcrumb.text }}
+                          </span>
+                          {% if breadcrumb.href %}</a><i class="sl20"></i>{% endif %}
+                          
+                    </div>
+
+                    {% endfor  %}
+
+                <div class="block__h1__sort">
+                    <h1 class="h1__main">Оформление заказа</h1>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+<section class="content main__content">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="main__basket__block">
+                    <div class="main__basket__block--left">
+
+
+                        
+
+                        <div class="line__basket">
+                            <div class="line__basket--img"><img src="img/item4.png" alt=""></div>
+                            <div class="line__basket--name">
+                                <p class="main__basket--text">Карта памяти microSDXC 128GB V30, UHS-I Class 3 (U3),
+                                    R:90MB/s, W:45MB/s, с
+                                    адаптером, OLMIO</p>
+                                <p class="main__basket--art">Артикул: 00068954</p>
+                                <p class="main__basket--del">Удалить из корзины</p>
+                            </div>
+                            <div class="line__basket--count">
+                                <div class="block__button_bay--left">
+                                    <span class="minus"></span>
+                                    <input type="text">
+                                    <span class="plus"></span>
+                                </div>
+                                <div class="yes__sklad">Есть</div>
+                            </div>
+                            <div class="line__basket--price">
+                                <div class="price__item">1850 <span>руб.</span></div>
+                            </div>
+                        </div>
+
+                        <div class="line__basket">
+                            <div class="line__basket--img"><img src="img/item4.png" alt=""></div>
+                            <div class="line__basket--name">
+                                <p class="main__basket--text">Карта памяти microSDXC 128GB V30, UHS-I Class 3 (U3),
+                                    R:90MB/s, W:45MB/s, с
+                                    адаптером, OLMIO</p>
+                                <p class="main__basket--art">Артикул: 00068954</p>
+                                <p class="main__basket--del">Удалить из корзины</p>
+                            </div>
+                            <div class="line__basket--count">
+                                <div class="block__button_bay--left">
+                                    <span class="minus"></span>
+                                    <input type="text">
+                                    <span class="plus"></span>
+                                </div>
+                                <div class="yes__sklad">Есть</div>
+                            </div>
+                            <div class="line__basket--price">
+                                <div class="price__item">1850 <span>руб.</span></div>
+                            </div>
+                        </div>
+                        <div class="result__summ">
+                            <div class="result__summ__line">
+                                <span>Всего товаров:</span>
+                                <span>1</span>
+                            </div>
+                            <div class="result__summ__line">
+                                <span>Сумма заказа:</span>
+                                <span>1790<span>руб.</span></span>
+                            </div>
+                            <div class="result__summ__line">
+                                <span class="result__orange">Итого:</span>
+                                <span class="result__orange result__orange--pluss">1790<span
+                                        class="result__orange result__orange--pluss">руб.</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main__basket__block--right">2</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="content-wrapper">
   <div class="center inner">
     <div class="content">
