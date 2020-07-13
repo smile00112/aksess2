@@ -1,34 +1,33 @@
 {{ header }}
 
 <section class="content">
-  <div class="container">
+    <div class="container">
       <div class="row">
-          <div class="col">
-              <div class="breads">
-                  {% for breadcrumb in breadcrumbs %}
-
-                  <div class="breadcrumb__item"  itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
-                      
-                      {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}
-                        <span class="breadcrumb__title" itemprop="title">
-                          {{ breadcrumb.text }}
-                        </span>
-                        {% if breadcrumb.href %}</a><i class="sl20"></i>{% endif %}
-                        
-                  </div>
-
-                  {% endfor  %}
-
-              <div class="block__h1__sort">
-                  <h1 class="h1__main">Корзина</h1>
-              </div>
-
-
+        <div class="col">
+          <div class="breads">
+            {% for breadcrumb in breadcrumbs %}
+    
+            <div class="breadcrumb__item" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+    
+              {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}"
+                title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}
+                <span class="breadcrumb__title" itemprop="title">
+                  {{ breadcrumb.text }}
+                </span>
+                {% if breadcrumb.href %}</a><i class="sl20"></i>{% endif %}
+    
+            </div>
+    
+            {% endfor  %}
+    
           </div>
-
+    
+          <div class="block__h1__sort">
+            <h1 class="h1__main">Корзина</h1>
+          </div>
+        </div>
       </div>
-  </div>
-  </div>
+    </div>
 </section>
 <section class="content main__content">
   <div class="container">
@@ -39,25 +38,25 @@
 
                     {% for product in products %}
 
-                    <div class="line__basket" id="{{ product.cart_id }}">
-                      <div class="line__basket--img">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</div>
-                      <div class="line__basket--name">
-                          <p class="main__basket--text"><a href="{{ product.href }}">{{ product.name }}</a></p>
-                          <p class="main__basket--art">Артикул: {{ product.sku }}</p>
-                          <p class="main__basket--del"><a class="setaside" href="/personal/cart/?action=delay&amp;id=18023" title="Отложить">Удалить из корзины</a></p>
-                      </div>
-                      <div class="line__basket--count">
-                          <div class="block__button_bay--left">
-                              <span class="minus"></span>
-                              <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="carrttt-input quantity form-control" />
-                              <span class="plus"></span>
+                      <div class="line__basket" id="{{ product.cart_id }}">
+                          <div class="line__basket--img">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</div>
+                          <div class="line__basket--name">
+                              <p class="main__basket--text"><a href="{{ product.href }}">{{ product.name }}</a></p>
+                              <p class="main__basket--art">Артикул: {{ product.sku }}</p>
+                              <p class="main__basket--del"><a class="setaside" href="/personal/cart/?action=delay&amp;id=18023" title="Отложить">Удалить из корзины</a></p>
                           </div>
-                          <div class="yes__sklad">Есть</div>
+                          <div class="line__basket--count">
+                              <div class="block__button_bay--left">
+                                  <span class="minus"></span>
+                                  <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="carrttt-input quantity form-control" />
+                                  <span class="plus"></span>
+                              </div>
+                              <div class="yes__sklad">Есть</div>
+                          </div>
+                          <div class="line__basket--price">
+                              <div class="price__item">{{ product.price_not_formated }} <span>руб.</span></div>
+                          </div>
                       </div>
-                      <div class="line__basket--price">
-                          <div class="price__item">{{ product.price }} <span>руб.</span></div>
-                      </div>
-                  </div>
 
 
 
