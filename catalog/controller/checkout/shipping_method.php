@@ -5,7 +5,7 @@
 class ControllerCheckoutShippingMethod extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
-
+		$this->session->data['shipping_address'] = 2222;
 		if (isset($this->session->data['shipping_address'])) {
 			// Shipping Methods
 			$method_data = array();
@@ -40,6 +40,9 @@ class ControllerCheckoutShippingMethod extends Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);
 
 			$this->session->data['shipping_methods'] = $method_data;
+			$this->session->data['shipping_methods2'] = $method_data;
+
+
 		}
 
 		if (empty($this->session->data['shipping_methods'])) {
@@ -76,17 +79,21 @@ class ControllerCheckoutShippingMethod extends Controller {
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
+			echo 111;
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
-		// Validate if shipping address has been set.
+		//Validate if shipping address has been set.
+		if (!isset($this->session->data['shipping_address'])) $this->session->data['shipping_address'] = 444;
 		if (!isset($this->session->data['shipping_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			echo 222;
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart');
+			echo 333;
 		}
 
 		// Validate minimum quantity requirements.
@@ -103,14 +110,53 @@ class ControllerCheckoutShippingMethod extends Controller {
 
 			if ($product['minimum'] > $product_total) {
 				$json['redirect'] = $this->url->link('checkout/cart');
-
+				echo 4444;
 				break;
 			}
 		}
 
+
+//Костыль Shipping Methods
+$method_data = array();
+
+$this->load->model('setting/extension');
+
+$results = $this->model_setting_extension->getExtensions('shipping');
+
+foreach ($results as $result) {
+	if ($this->config->get('shipping_' . $result['code'] . '_status')) {
+		$this->load->model('extension/shipping/' . $result['code']);
+
+		$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote(1);
+
+		if ($quote) {
+			$method_data[$result['code']] = array(
+				'title'      => $quote['title'],
+				'quote'      => $quote['quote'],
+				'sort_order' => $quote['sort_order'],
+				'error'      => $quote['error']
+			);
+		}
+	}
+}
+
+$sort_order = array();
+
+foreach ($method_data as $key => $value) {
+	$sort_order[$key] = $value['sort_order'];
+}
+
+array_multisort($sort_order, SORT_ASC, $method_data);
+$this->session->data['shipping_methods'] = $method_data;
+
+// ---------------Shipping Methods
+
+
+
 		if (!isset($this->request->post['shipping_method'])) {
 			$json['error']['warning'] = $this->language->get('error_shipping');
 		} else {
+
 			$shipping = explode('.', $this->request->post['shipping_method']);
 
 			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {

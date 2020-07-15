@@ -6,15 +6,17 @@ class ControllerCheckoutConfirm extends Controller {
 	public function index() {
 		$redirect = '';
 
+//print_r($this->session);
+
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$redirect = $this->url->link('checkout/checkout', '', true);
+				$redirect = $this->url->link('checkout/checkout1', '', true);
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout', '', true);
+				$redirect = $this->url->link('checkout/checkout2', '', true);
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -24,12 +26,12 @@ class ControllerCheckoutConfirm extends Controller {
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
-			$redirect = $this->url->link('checkout/checkout', '', true);
+			$redirect = $this->url->link('checkout/checkout3', '', true);
 		}
 
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
-			$redirect = $this->url->link('checkout/checkout', '', true);
+			$redirect = $this->url->link('checkout/checkout4', '', true);
 		}
 
 		// Validate cart has products and has stock.
@@ -325,7 +327,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->load->model('checkout/order');
 
 			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
-
+echo '______'.$this->session->data['order_id'];
+exit;
 			$this->load->model('tool/upload');
 
 			$data['products'] = array();
@@ -415,6 +418,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['redirect'] = $redirect;
 		}
 
+		echo '____Redirect';
+print_r($data);
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));
 	}
 }

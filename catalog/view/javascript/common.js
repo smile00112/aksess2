@@ -147,10 +147,13 @@ function view_preloder($show){
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {
-		var $q = $( '#product_'+product_id+'_quantity' ).val();
-		if( typeof($q) != 'undefined' ){
-			quantity = $q;
-		}
+		
+		/*
+			var $q = $( '#product_'+product_id+'_quantity' ).val();
+			if( typeof($q) != 'undefined' ){
+				quantity = $q;
+			}
+		*/
 		$.ajax({
 			url: 'index.php?route=checkout/cart/add',
 			type: 'post',
@@ -221,16 +224,16 @@ var cart = {
 						dataType: 'json',
 						beforeSend: function() {
 							view_preloder(true);
-							$('#cart > button').button('loading');
+							//$('#cart > button').button('loading');
 						},
 						complete: function() {
 							view_preloder(false);
-							$('#cart > button').button('reset');
+							//$('#cart > button').button('reset');
 						},
 						success: function(json) {
 							// Need to set timeout otherwise it wont update the total
 							$('#cart').load('index.php?route=common/cart/info');
-							$('#cart_equipment > .tbody').load('index.php?route=checkout/cart #cart_equipment > .tbody');
+							$('#cart_equipment').load('index.php?route=checkout/cart #cart_equipment >');
 							
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
@@ -247,10 +250,12 @@ var cart = {
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
-				$('#cart > button').button('loading');
+				view_preloder(true);
+				//$('#cart > button').button('loading');
 			},
 			complete: function() {
-				$('#cart > button').button('reset');
+				view_preloder(false);
+				//$('#cart > button').button('reset');
 			},
 			success: function(json) {
 				// Need to set timeout otherwise it wont update the total
@@ -276,10 +281,12 @@ var cart = {
 			data: 'key=' + key,
 			dataType: 'json',
 			beforeSend: function() {
-				$('#cart > button').button('loading');
+				view_preloder(true);
+				//$('#cart > button').button('loading');
 			},
 			complete: function() {
-				$('#cart > button').button('reset');
+				view_preloder(false);
+				//$('#cart > button').button('reset');
 			},
 			success: function(json) {
 				// Need to set timeout otherwise it wont update the total

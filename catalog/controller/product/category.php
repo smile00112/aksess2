@@ -241,24 +241,28 @@ class ControllerProductCategory extends Controller {
 			
 			//Дорабатывает цвета
 			$request_color = !empty($this->request->get['color']) ? $this->request->get['color'] : '';
+			$request_color = explode(';', $request_color); 
 			foreach($data['filter_color'] as &$c){
 				$c['translit'] =  $this->getTranslit($c['text']);
-				$c['checked'] = $request_color == $c['text'] ? true : false;
+				$c['checked'] = in_array( $c['text'], $request_color ) ? true : false;
 			}
 
 			$request_manufacturer = !empty($this->request->get['manufacturer']) ? $this->request->get['manufacturer'] : '';
+			$request_manufacturer = explode(';', $request_manufacturer); 
 			foreach($data['filter_manufacturer'] as &$c){
-				$c['checked'] = $request_manufacturer == $c['text'] ? true : false;
+				$c['checked'] = in_array( $c['text'], $request_manufacturer ) ? true : false;
 			}
 
 			$request_matherial = !empty($this->request->get['matherial']) ? $this->request->get['matherial'] : '';
+			$request_matherial = explode(';', $request_matherial); 
 			foreach($data['filter_matherial'] as &$c){
-				$c['checked'] = $request_matherial == $c['text'] ? true : false;
+				$c['checked'] = in_array( $c['text'], $request_matherial ) ? true : false;
 			}
 
 			$request_model = !empty($this->request->get['model']) ? $this->request->get['model'] : '';
+			$request_model = explode(';', $request_model); 
 			foreach($data['filter_model'] as &$c){
-				$c['checked'] = $request_model == $c['text'] ? true : false;
+				$c['checked'] = in_array( $c['text'], $request_model ) ? true : false;
 			}
 
 

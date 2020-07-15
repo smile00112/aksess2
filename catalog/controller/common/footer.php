@@ -15,7 +15,39 @@ class ControllerCommonFooter extends Controller {
 				);
 			}
 		}
+		//Подключаем меню каталога
+		$this->load->model('catalog/category');
+		$data['categories'] = array();
+		$categories = $this->model_catalog_category->getAllCategories(0, 34718);
 
+		foreach ($categories as $category) {
+			$children_data = array();
+
+			$filter_data = array(
+				'filter_category_id'  => $category['category_id'],
+				'filter_sub_category' => true
+			);
+
+			$childs = [];
+			// foreach ($category['children'] as $ch) {
+			// 	$ch['href'] = $this->url->link('product/category', 'path=' . $ch['category_id']);
+			// 	$childs[]=$ch;
+			// }
+
+			if(empty($category['children'])) $category['children'] = [];
+			if(!empty($category['top']) || $category['category_id'] == 31718)
+				$data['categories'][] = array(
+					'category_id' => $category['category_id'],
+					//'name'	=> $category['name'],
+					'name'	=> $category['meta_h1'],
+					'icon'	=> html_entity_decode($category['icon']),
+					'product_count' => $this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '',
+					'children'    => $childs,
+					'href'        => $this->url->link('product/category', 'path=' . $category['category_id']),
+					//'current' => $this->url->link('product/category', 'path=' . $category['category_id']) == $current_page ? 1 : 0,
+				);
+		}
+		
 		$data['contact'] = $this->url->link('information/contact');
 		$data['return'] = $this->url->link('account/return/add', '', true);
 		$data['sitemap'] = $this->url->link('information/sitemap');

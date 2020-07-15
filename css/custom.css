@@ -149,7 +149,9 @@
 .submenu {
   left: 0px;
 }
-
+.hide{
+  display:none;
+}
 .checkbox.zhyoltyj span {  background: #fd0; }
 .checkbox.belyj span {  background: #ffffff; border: 1px solid;}
 .checkbox.zelyonyj span {  background: #2e7d32; }
@@ -176,3 +178,6 @@
 .checkbox.tyomno-zelyonyj span {  background: rgb(8, 73, 33); }
 .checkbox.tyomno-seryj span {  background: rgb(59, 59, 59); }
 .checkbox.tyomno-sinij span {  background: rgb(16, 5, 65); }
+
+
+

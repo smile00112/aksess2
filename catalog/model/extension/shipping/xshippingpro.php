@@ -1147,10 +1147,13 @@ class ModelExtensionShippingXshippingpro extends Model {
 				'code'         => 'xshippingpro'.'.xshippingpro'.$no_of_tab,
 				'title'        => $xshippingpro['name'][$language_id],
 				'desc'         => html_entity_decode($method_desc),
+				'description'	=> html_entity_decode($xshippingpro['desc'][$language_id]),
+				
 				'display' => $xshippingpro['display'],
 				'logo'         => $xshippingpro['logo'],
 				'image'         => $xshippingpro['logo'], /* for other checkout module*/
 				'cost'         => $cost,
+				'cost_currency' => $this->currency->format($this->tax->calculate($cost, $xshippingpro['tax_class_id'], $this->config->get('config_tax')),$currency_code),
 				'group'         => intval($xshippingpro['group']),
 				'sort_order'         => intval($xshippingpro['sort_order']),
 				'tax_class_id' => $xshippingpro['tax_class_id'],

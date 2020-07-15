@@ -62,20 +62,24 @@
 						<div class="footer__block-2">
 							<h3>Каталог</h3>
 							<ul>
-								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Чехлы для телефонов</a></li>
-									</ul>
+                {% for category in categories %}
+                <li>
+                  <a href="{{ category.href }}" class="hvr-underline-from-left">
+                    {{ category.name }}
+                  </a> 
+                </li>
+
+                {% endfor %}
+
+							</ul>
 						</div>
 						<div class="footer__block-2">
 							<h3>Покупателю</h3>
 							<ul>
-								<li><a href="#" class="hvr-underline-from-left">О нас</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Доставка</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Оплата</a></li>
-								<li><a href="#" class="hvr-underline-from-left">Контакты</a></li>
+								<li><a href="/about" class="hvr-underline-from-left">О нас</a></li>
+								<li><a href="/oplata/" class="hvr-underline-from-left">Доставка и оплата</a></li>
+								<li><a href="/garanty/" class="hvr-underline-from-left">Гарантии</a></li>
+								<li><a href="/contacts/" class="hvr-underline-from-left">Контакты</a></li>
 
 							</ul>
 						</div>
@@ -96,9 +100,11 @@
 
 
 
-<script src="/catalog/view/javascript/magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script>
 
 <script src="/js/scripts.min.js"></script>
+
+<script src="/catalog/view/javascript/magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script>
+
 <script src="/catalog/view/javascript/main.js?t=1234" type="text/javascript"></script> 
 
 {% for script in scripts %}

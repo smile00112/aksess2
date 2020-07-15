@@ -5,7 +5,7 @@
 class ControllerCheckoutPaymentMethod extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
-
+		$this->session->data['payment_address'] = 111;
 		if (isset($this->session->data['payment_address'])) {
 			// Totals
 			$totals = array();
@@ -241,10 +241,10 @@ if(empty($this->session->data['payment_methods'])){
 		}
 
 		if (!isset($this->request->post['payment_method'])) {
-			echo 111;
+
 			$json['error']['warning'] = $this->language->get('error_payment');
 		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			echo 222;
+
 			$json['error']['warning'] = $this->language->get('error_payment');
 		}
 
@@ -253,9 +253,9 @@ if(empty($this->session->data['payment_methods'])){
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
+			// if ($information_info && !isset($this->request->post['agree'])) {
+			// 	$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			// }
 		}
 
 		if (!$json) {
