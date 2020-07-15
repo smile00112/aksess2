@@ -24,7 +24,7 @@
                    <i class="sl20"></i>
                   {% endif %}
 
-            {% endfor %}
+              {% endfor %}
            
 				</div>
 				<div class="block__h1__sort">
@@ -265,20 +265,14 @@
 <script>
 let map = {{category_products_map}};
 console.log(map)
-
 function _map(element) {
   console.log( element.value );
 }
-
-
-
 class Filter {
   //var self = this;
   handleEvent(event) {
-
     //Типы фильтров
     
-
     //Имя текущего выбранного фильтра
     let el_name = event.target.checked ? event.target.name : '';
     let target = event.target;
@@ -290,20 +284,16 @@ class Filter {
         break;
       case 'click':
       
-
       
     };*/
   
   };
-
   }
-
   function filtered(el_name){
     //console.log(event.target.value)
     let p_ar = document.querySelector('[name="price"]').value.split(';');
     let price_from = p_ar[0];
     let price_to = p_ar[1];
-
     let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
     //Массив выбранных цветов 
     let selected_colors = Array.prototype.map.call(document.querySelectorAll('[name="color"]:checked'), function (item) {
@@ -321,7 +311,6 @@ class Filter {
     let selected_matherials = Array.prototype.map.call(document.querySelectorAll('[name="matherial"]:checked'), function (item) {
       return item.value;
   });      
-
         //Обнуляем предполагаемые колличества товарво
     filter_types.forEach(function(filter_t, i, arr){
         document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
@@ -345,9 +334,7 @@ class Filter {
           let model = ( !selected_models.length ) || ( selected_models.indexOf(item.model) >=0 ) ;
           let matherial = ( !selected_matherials.length  ) || ( selected_matherials.indexOf(item.matherial) >=0  ) ;
           let manufacturer = ( !selected_manufacturiers.length ) ||( selected_manufacturiers.indexOf(item.manufacturer) >=0  ) ;
-
           let $result = color && model && matherial && manufacturer && price;
-
           if( $result ){
               filter_types.forEach(function(filter_t, i, arr){
                   //document.querySelectorAll('.accordion__'+ filter_t +' [data-attr_ostatok]').forEach((element) => {
@@ -366,7 +353,6 @@ class Filter {
           }
          //let price = true;
         //console.log(item);
-
         console.log(item.color, color, model, matherial, manufacturer, price);
         return $result;
 /*
@@ -375,12 +361,10 @@ class Filter {
               ( selected_models.indexOf( item.model ) >= 0 || item.model == null ) &&
               ( selected_matherials.indexOf( item.matherial ) >= 0 || item.matherial == null )
               ;
-
           if(selected_colors.length && !selected_manufacturiers.length && !selected_models.length  && !selected_matherials.length) {
             console.log(item.color, selected_colors.indexOf( item.color ));
             return ( selected_colors.indexOf( item.color ) >= 0 || item.color == null);
           }  
-
           if(!selected_colors.length && selected_manufacturiers.length)  
             return( selected_manufacturiers.indexOf( item.manufacturer ) >= 0 || item.manufacturer == null );          
 */
@@ -388,7 +372,6 @@ class Filter {
       
       console.error('map_filtered');
       console.error(map_filtered);
-
 /*
       //Обнуляем предполагаемые колличества товаров
       filter_types.forEach(function(filter_t, i, arr){
@@ -398,7 +381,6 @@ class Filter {
             if(filter_t != el_name)
               element.innerHTML = 0;
             else element.innerHTML = '';
-
           });
       });
 */
@@ -415,12 +397,10 @@ class Filter {
                   el.innerHTML = el.innerHTML*1+1;
               }
             }
-
           });
         });
       });
 */
-
       //Делаем скобки
   /*
       filter_types.forEach(function(filter_t, i, arr){
@@ -428,31 +408,24 @@ class Filter {
          if(element.innerHTML)
             element.innerHTML = '('+element.innerHTML+')'
         
-
        });
       });
       */
       // console.warn( fitlterItem.value )
       
     }
-
 document.querySelectorAll('[data-filter_val]').onclick = function() { // перезапишет существующий обработчик
     console.log( this.value );
 };
-
 let filter = new Filter();
-
 setTimeout(function tick() {
-
   //Назначаем события для checkbox фильтра
   let filter_elements = document.querySelectorAll('[data-filter_val]');
   filter_elements.forEach((fitlterItem) => fitlterItem.addEventListener('click' , filter ))
 //console.log(filter_elements);
-
   //Назначаем события для поля цена фильтра  
   let filter_price = document.querySelector('[name="price"]');
   //filter_price.addEventListener('change' , alert() );
-
   //Назначаем события для кнопки "показать еще" фильтра  
   let filter_more = document.querySelectorAll('.more_filter_items');
   filter_more.forEach((fitlterItem) => fitlterItem.addEventListener('click' , function(){
@@ -461,42 +434,34 @@ setTimeout(function tick() {
         elem.style.display = '';
         //elem.remove();
       });
-
       this.remove();
   } ));
-
-
  // document.querySelector('.accordion__color input[type="checkbox"]').click();
  // document.querySelector('.accordion__color input[type="checkbox"]').click();
-
  filtered('price');
-
 }, 2000);
-
 function mmmm() {
   filter
 }
-
 let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
-
 $('.filter-aply').click(function(e){
     e.preventDefault();
-
     var patch = '',
-    var url_t = [];
+    url_t = [];
     $url='{{u}}';
-
+    //Собираем выбранные параметры
     $('.filtr input:checked').each(function(){
         if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price'){
+          if(!!!url_t[$(this).prop('name')]) url_t[$(this).prop('name')] = '';
           url_t[$(this).prop('name')]+=$(this).val()+';';
         }
-
-        
     });
-    console.log(url_t);
-    //patch+='&'+$(this).prop('name')+'='+$(this).val();
-    alert(patch);
-    return;
+    //Делаем ссылку
+     for (key in url_t) {
+      //console.log(key, url_t[key]);
+      patch+='&'+key+'='+url_t[key];
+      //elem.remove();
+    };
     //обработка слайдеров 
     var 
     p = $('[name="price"]').val();
@@ -512,8 +477,6 @@ $('.filter-aply').click(function(e){
     {
           patch+='&price_to='+price_to;
     }       
-
-
     //patch=window.location.href+patch;
     patch=$url+patch;
     //console.log(patch); 
@@ -523,7 +486,6 @@ $('.filter-aply').click(function(e){
 for (let elem of elements) {
   console.warn(elem.value); // "тест", "пройден"
 }*/
-
 </script>
 
 
@@ -631,31 +593,13 @@ for (let elem of elements) {
             <div class="form-group input-group input-group-sm">
               <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
-
-
-
                 {% for sorts in sorts %}
                 {% if sorts.value == '%s-%s'|format(sort, order) %}
-
-
-
                 <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-
-
-
                 {% else %}
-
-
-
                 <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-
-
-
                 {% endif %}
                 {% endfor %}
-
-
-
               </select>
             </div>
           </div>
@@ -663,31 +607,13 @@ for (let elem of elements) {
             <div class="form-group input-group input-group-sm">
               <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
-
-
-
                 {% for limits in limits %}
                 {% if limits.value == limit %}
-
-
-
                 <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-
-
-
                 {% else %}
-
-
-
                 <option value="{{ limits.href }}">{{ limits.text }}</option>
-
-
-
                 {% endif %}
                 {% endfor %}
-
-
-
               </select>
             </div>
           </div>
@@ -745,6 +671,4 @@ for (let elem of elements) {
       </div>
     </div>
   </div>
-
-
   #}
