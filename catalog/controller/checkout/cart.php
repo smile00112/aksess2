@@ -62,14 +62,16 @@ class ControllerCheckoutCart extends Controller {
 			$products = $this->cart->getProducts();
 
 			foreach ($products as $product) {
-				$product_total = 0;
+				$product_total =  $product_total2 = 0;
 
 				foreach ($products as $product_2) {
-					if ($product_2['product_id'] == $product['product_id']) {
+					if ($product_2['product_id'] == $product['product_id']) 
+					{
 						$product_total += $product_2['quantity'];
 					}
+					$product_total2+= $product_2['quantity'];
 				}
-
+	
 				if ($product['minimum'] > $product_total) {
 					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 				}
@@ -147,9 +149,11 @@ class ControllerCheckoutCart extends Controller {
 					'price'     => $price,
 					'price_not_formated'	=> $product['price'],
 					'total'     => $total,
+					'total_nf' => $unit_price * $product['quantity'],
 					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				);
 			}
+			$data['product_total'] = $product_total2;
 
 			// Gift Voucher
 			$data['vouchers'] = array();
@@ -212,6 +216,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['totals'] = array();
 
 			foreach ($totals as $total) {
+				//if ( $total['title'] == 'Итого' ) $total['title'] = 'Сумма заказа';
 				$data['totals'][] = array(
 					'title' => $total['title'],
 					'code' => $total['code'],

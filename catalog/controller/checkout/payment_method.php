@@ -5,7 +5,7 @@
 class ControllerCheckoutPaymentMethod extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
-
+		$this->session->data['payment_address'] = 111;
 		if (isset($this->session->data['payment_address'])) {
 			// Totals
 			$totals = array();

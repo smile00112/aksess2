@@ -50,9 +50,20 @@
 
 {% for payment_method in payment_methods %}
 
-<div class="bx-soa-pp-company bx-soa-pp-company-p {% if payment_method.code == code or not code %} bx-selected {% endif %}">
+<p class="pay__nalog">
+  {% if payment_method.code == code or not code %}
+  {% set code = payment_method.code %}
+  <input type="radio" name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" checked="checked" />
+  {% else %}
+  <input type="radio" name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" />
+  {% endif %}
+  <label for="{{ payment_method.code }}" class="" style="background: url(..{{ payment_method.image }}) 15px 40% no-repeat;">{{ payment_method.title }}</label>
+</p>
+
+{#}
+<div class="hide bx-soa-pp-company bx-soa-pp-company-p {% if payment_method.code == code or not code %} bx-selected {% endif %}">
   <div class="bx-soa-pp-company-graf-container">
-      <div class="bx-soa-pp-company-graf">
+      <div class="bx-soa-pp-company-graf">z
           <div class="bx-soa-pp-company-checkbox">
             {% if payment_method.code == code or not code %}
             {% set code = payment_method.code %}
@@ -72,16 +83,11 @@
   </div>
   <div class="bx-soa-pp-company-smalltitle">{{ payment_method.title }}</div><label class="icon"><i class="fa fa-check"></i></label>
 </div>
-
+#}
 
 {% endfor %}
 {% endif %}
-<div class="hide">
-  <p><strong>{{ text_comments }}</strong></p>
-  <p>
-    <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
-  </p>
-</div>
+
 {% if text_agree %}
 <div class="buttons hide">
   <div class="pull-right">{{ text_agree }}
@@ -95,24 +101,12 @@
   </div>
 </div>
 
-<div class="bx-soa-more">
-  <button type="button" class="btn_buy ppp prev" >Назад</button>
-  <button type="button" class="btn_buy popdef next" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}">Далее</button>
-</div>
 {% else %}
-<div class="buttons hide">
-  <div class="pull-right">
-    <input type="button" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
-  </div>
-</div>
 
-<div class="bx-soa-more">
-  <button type="button" class="btn_buy ppp prev" >Назад</button>
-  <button type="button" class="btn_buy popdef next" value="{{ button_continue }}" id="button-payment-method" data-loading-text="{{ text_loading }}">Далее</button>
-</div>
 {% endif %} 
 
 <script>
+  /*
   $('.bx-soa-pp-company-p').click(function(){
       var $this = $(this);
       $this.find('input[name="payment_method"]').prop('checked', 'checked');
@@ -121,4 +115,5 @@
       $('.bx-soa-pp-company-p').removeClass('bx-selected');
       $this.addClass('bx-selected');
   })
+  */
 </script>

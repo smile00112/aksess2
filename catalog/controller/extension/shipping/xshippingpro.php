@@ -44,7 +44,7 @@ class ControllerExtensionShippingXshippingpro extends Controller {
 					if (!is_array($xshippingpro)) $xshippingpro = array();
 					if (!isset($xshippingpro['desc'])) $xshippingpro['desc']=array();
 
-					$data['shipping_method'].= (isset($xshippingpro['desc'][$language_id]) && $xshippingpro['desc'][$language_id]) ? '<br /><span style="color: #999999;font-size: 11px;display:block" class="x-shipping-desc">'.$xshippingpro['desc'][$language_id].'</span>' : '';	
+					
 				}
 		}
 	}
