@@ -51,11 +51,11 @@
 {% for payment_method in payment_methods %}
 
 <p class="pay__nalog">
-  {% if payment_method.code == code or not code %}
+  {% if payment_method.code == code  %}
   {% set code = payment_method.code %}
-  <input type="radio" name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" checked="checked" />
+  <input type="radio" required name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" checked="checked" />
   {% else %}
-  <input type="radio" name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" />
+  <input type="radio" required name="payment_method" id="{{ payment_method.code }}" value="{{ payment_method.code }}" />
   {% endif %}
   <label for="{{ payment_method.code }}" class="" style="background: url(..{{ payment_method.image }}) 15px 40% no-repeat;">{{ payment_method.title }}</label>
 </p>

@@ -1,4 +1,4 @@
- <form action="/index.php?route=checkout/guest/save" method="post">
+ <form action="/index.php?route=checkout/guest/save" id="guestCheckoutForm" method="post">
 
                         <h3>Оформление заказа</h3>
                             <div id="user_data">    
@@ -313,25 +313,41 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 	}, 500);
 });
 //--></script>
-<script type="text/javascript"><!--
-/*
-$('.date').datetimepicker({
-	language: '{{ datepicker }}',
-	pickTime: false
+<script type="text/javascript">
+  
+  $(document).on('submit', '#guestCheckoutForm', function(e) {
+    e.preventDefault();
+    var $form = $(this).serialize();
+    $.ajax({
+      type : 'POST',
+      url : 'index.php?route=checkout/guest/save',
+      data :  $form,
+      dataType : 'json',
+      beforeSend: function() {
+          view_preloder(true);
+        //$('#button-shipping-method').button('loading');
+      },
+      complete: function() {
+          view_preloder(false);
+          //$('#cart > button').button('reset');
+      },
+      success: function(json) {
+          //console.log(json.error);
+          //если есть ошибки, показываем сообщение
+          if(json.error){
+            show_message( json.error[Object.keys(json.error)[0]] )
+          }
+          else{
+            //Если всё норм на конфирм
+            location = 'index.php?route=checkout/confirm';
+          }
+          
+      }
+    });
 });
 
-$('.time').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: false
-});
+</script> 
 
-$('.datetime').datetimepicker({
-	language: '{{ datepicker }}',
-	pickDate: true,
-	pickTime: true
-});
-*/
-//--></script> 
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
 	$.ajax({

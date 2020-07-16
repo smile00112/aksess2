@@ -360,10 +360,15 @@ function hide_step(elem){
 
 function load_basket(){
 
-    $('#cart_equipment').load('index.php?route=checkout/cart #cart_equipment >');;
+    $('#cart_equipment').load('index.php?route=checkout/cart #cart_equipment >',function(data){
+        //Обновляем total2
+        var cart = $(data).find('#result__summ_cart');
+        cart.find('.result__summ__line:first').remove();
+        $('#total2').html(cart.html());
+    });
     
-    //Обновляем total2
-    setTimeout(function(){ $('#total2').html($('#result__summ_cart').html()); $('#total2').find('.result__summ__line:first').remove()}, 2500);
+
+    //setTimeout(function(){ $('#total2').html($('#result__summ_cart').html()); $('#total2').find('.result__summ__line:first').remove()}, 2500);
 
     return;
 

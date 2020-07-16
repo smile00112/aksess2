@@ -149,7 +149,9 @@ if(empty($this->session->data['payment_methods'])){
 			$sort_order = array();
 
 			$results = $this->model_setting_extension->getExtensions('total');
-
+			
+		if(!isset($this->session->data['payment_address'])) $this->session->data['payment_address'] = [];
+		
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
@@ -205,11 +207,13 @@ if(empty($this->session->data['payment_methods'])){
 //----Велик (пропал $this->session->data['payment_methods']  -> набираем заново)
 		}
 //print_r($_POST);
-//print_r($this->session->data['payment_methods']);
+//print_r($this->session->data['payment_methods']); 
 		
 		$this->load->language('checkout/checkout');
 
 		$json = array();
+		//$this->session->data['payment_address']['country_id'] = 176;
+		// $this->session->data['payment_address']['zone_id'] = 0;
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {

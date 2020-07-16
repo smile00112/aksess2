@@ -28,7 +28,7 @@
            
 				</div>
 				<div class="block__h1__sort">
-					<h1 class="h1__main">{{ heading_title }} {{ product_total }} товаров</h1>
+					<h1 class="h1__main">{{ heading_title }} {#{ product_total }} товаров#}</h1>
 					<!--<div class="sort__block">-->
 						<!--<p class="name__sort">Сортировать по цене</p>-->
 						<!--<span class="active"><i class="sl22"></i></span>-->
@@ -440,7 +440,7 @@ setTimeout(function tick() {
  // document.querySelector('.accordion__color input[type="checkbox"]').click();
  filtered('price');
 }, 2000);
-function mmmm() {
+function mmmm() { 
   filter
 }
 let filter_types = ['color', 'manufacturer', 'model', 'matherial'];
@@ -449,10 +449,7 @@ $('.filter-aply').click(function(e){
     var patch = '',
     url_t = [];
     $url='{{u}}';
-<<<<<<< HEAD
-=======
 
->>>>>>> dae3cca0e0d99f912c1479e9c0c047705be59a3a
     //Собираем выбранные параметры
     $('.filtr input:checked').each(function(){
         if($(this).prop('name')!='category[]' &&  $(this).prop('name')!='price'){
@@ -466,10 +463,7 @@ $('.filter-aply').click(function(e){
       patch+='&'+key+'='+url_t[key];
       //elem.remove();
     };
-<<<<<<< HEAD
-=======
 
->>>>>>> dae3cca0e0d99f912c1479e9c0c047705be59a3a
     //обработка слайдеров 
     var 
     p = $('[name="price"]').val();

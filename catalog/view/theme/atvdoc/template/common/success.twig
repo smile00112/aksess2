@@ -1,40 +1,26 @@
 {{ header }}
 
-<div class="content-wrapper">
-  <div class="center inner">
-    <div class="content">
-      <div class="left-column">
+<section class="content main__content">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="breads">
+         
+            <a href="/">Главная</a>
+            <i class="sl20"></i>
+            <span>Заказ сформирван</span> 
+          
+          
 
-        {{ column_left }}
-
-        {{ column_right }}
+				</div>
 
 
-      </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+        <h1 class="h1__main h1__margin">{{ heading_title }}</h1>
 
-
-      <div class="workarea {{ class }}" id="content">
-        <div class="body_text">
-
-          <div class="breadcrumb-share">
-            <div id="navigation" class="breadcrumb">
-
-              {% for breadcrumb in breadcrumbs %}
-
-                 <div class="breadcrumb__item"  itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
-                    <span class="breadcrumb__arrow"></span>
-                    {% if breadcrumb.href %} <a class="breadcrumb__link" href="{{ breadcrumb.href }}" title="{{ breadcrumb.text1 }}" itemprop="url">{% endif %}
-                      <span class="breadcrumb__title" itemprop="title">
-                        {{ breadcrumb.text }}
-                      </span>
-                      {% if breadcrumb.href %}</a>{% endif %}
-                  </div>
-              {% endfor %}
-
-            </div>
-          </div>
-
-        <h1 id="pagetitle">{{ heading_title }}</h1>
         {{ content_top }}
 
         {{ text_message }}
@@ -44,12 +30,11 @@
 
         {{ content_bottom }}
 
-      
-   
-  </div>
-  </div>
-  </div>    
-</div>  
+			
+			</div>
+		</div>
+	</div>
+</section>
 
 
 

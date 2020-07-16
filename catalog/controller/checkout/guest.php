@@ -176,7 +176,7 @@ class ControllerCheckoutGuest extends Controller {
 		$this->load->language('checkout/checkout');
 
 		$json = array();
-print_r( $this->request->post );
+
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
@@ -190,6 +190,10 @@ print_r( $this->request->post );
 		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+		}
+
+		if(empty($this->request->post['address_1'])){
+			$this->request->post['address_1'] = $this->request->post['city'].' '.$this->request->post['adres_street'].' '.$this->request->post['adres_home'].' '.$this->request->post['adres_kvart'];
 		}
 
 		if (!$json) {
@@ -286,7 +290,7 @@ print_r( $this->request->post );
 			} else {
 				$this->session->data['guest']['custom_field'] = array();
 			}
-
+			$this->session->data['payment_address'] = [];
 			$this->session->data['payment_address']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['payment_address']['lastname'] = $this->request->post['lastname'];
 			$this->session->data['payment_address']['company'] = $this->request->post['company'];

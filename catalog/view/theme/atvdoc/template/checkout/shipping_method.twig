@@ -43,11 +43,11 @@
   {% for shipping_method in shipping_methods %}
     {% for quote in shipping_method.quote %}
       <p class="">
-        {% if quote.code == code or not code %}
+        {% if quote.code == code %}
         {% set code = quote.code %}
-        <input type="radio" id="{{ quote.code }}" name="shipping_method" value="{{ quote.code }}" checked="checked" class="bx-soa-pp-company-input" />
+        <input type="radio" required id="{{ quote.code }}" name="shipping_method" value="{{ quote.code }}" checked="checked" class="bx-soa-pp-company-input" />
         {% else %}
-        <input type="radio" id="{{ quote.code }}" name="shipping_method" value="{{ quote.code }}" />
+        <input type="radio" required id="{{ quote.code }}" name="shipping_method" value="{{ quote.code }}" />
         {% endif %}
         <label for="{{ quote.code }}" class="label__pay">
           <span>{{ quote.title }}:{{ quote.cost_currency }} <br> {{ quote.description }} </span>

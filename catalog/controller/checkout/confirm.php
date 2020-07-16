@@ -327,8 +327,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->load->model('checkout/order');
 
 			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
-echo '______'.$this->session->data['order_id'];
-exit;
+
+
 			$this->load->model('tool/upload');
 
 			$data['products'] = array();
@@ -418,8 +418,9 @@ exit;
 			$data['redirect'] = $redirect;
 		}
 
-		echo '____Redirect';
-print_r($data);
+//echo '____Redirect';
+// print_r($data);
+		//$this->response->setOutput($this->load->view('checkout/confirm', $data));
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));
 	}
 }
